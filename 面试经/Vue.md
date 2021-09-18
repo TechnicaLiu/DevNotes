@@ -44,14 +44,14 @@
 
 2. created和mounted的区别
 
-   * created 在模板渲染成 html前调用，主要用来初始化数据 
-   * mounted 在模板渲染成html后调用，通常是初始化页面完成后，再对HTM中的DOM节点进行操作 ，如echarts中，就必须得dom节点加载完后才能进行初始化配置
+   * created **在模板渲染成 html前调用**，主要用来初始化数据 
+   * mounted **在模板渲染成html后调用**，通常是初始化页面完成后，再对HTM中的DOM节点进行操作 ，如echarts中，就必须得dom节点加载完后才能进行初始化配置
 
 3. 对Vue中 keep-alive的理解和使用 
 
    > keep-alive 是Vue内置的一个组件，可以是被包含的组件保留状态，或避免重新渲染，也就是组件缓存
 
-   被包含在<keep-alive> 中创建的组件，会新增两个生命周期的钩子， activated与 deactivated 
+   被包含在<keep-alive> 中创建的组件，会新增两个生命周期的钩子， **activated与 deactivated** 
 
     activated ：当 keep-alive 包含的组件再次渲染的时候触发
 
@@ -61,7 +61,7 @@
 
    > 其核心是 Object.defineProperty()方法  
 
-   vue.js 则是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
+   vue.js 则是**采用数据劫持结合发布者-订阅者模式**的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
    
    但是 Vue2所使用的 Object.defineProperty()方法   只能监听已存在的属性，对于新增删除属性却不可以 而且无法监听数组的变化。 所以Vue3.0   proxy代理  出现了！！ 
    
@@ -395,4 +395,10 @@
     vue组件中data值不能为对象，因为**对象是引用类型**，组件可能会被多个实例同时引用，如果data值为对象，将导致多个实例共享一个对象，当一个组件改变其data值时，其他实例也会受到影响。
 
     只有当 data为 函数时，通过**return  返回对象的拷贝**，致使每个实例都有自己独立的对象， 实例之间可以互不影响的改变data属性值  。
+
+27. 对比jQuery, Vue有什么不同 ？
+
+    **jQuery 专注视图层，通过操作DOM去实现页面的一些逻辑 渲染**;Vue专注于数据层，通过数据的双向绑定，最终表现在DOM层面，减少了DOM 操作。
+
+    Vue 使用了组件化思想，使得项目子集职责清晰，提高了开发效率，便于重复利用，协同开发。
 

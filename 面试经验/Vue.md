@@ -44,7 +44,7 @@
    Destroy
    ```
 
-2. v-if和v-show的 区别
+2. v-if 和 v-show 的 区别
 
    * v-show 会把HTML元素先渲染起来，符合条件就显示，不符合条件display就为None ,不显示，但是元素还在那
    * v-if 是真正意义上的条件渲染，浏览器会进行条件判断，true就会再渲染，否则不渲染DOM
@@ -179,7 +179,7 @@
 
 12. vue-loader的作用
 
-    解析和转换.vue文件。提取出其中的逻辑代码 script,样式代码style,以及HTML 模板template，再分别把他们交给对应的loader去处理
+    **解析和转换.vue文件**。提取出其中的逻辑代码 script,样式代码style,以及HTML 模板template，再分别把他们交给对应的**loader**去处理
 
     js可以写es6,style样式可以写scss或less、template可以加jade等
 
@@ -231,12 +231,6 @@
       @click="this.$router.push({name: 'cartTest', params: {id: 1}})"
       @click="this.$router.push({name: 'cartTest', query: {id: 1}})"
       ```
-
-14. Vue3的新特性
-    * Composition API   可以提高代码逻辑的可复用性，从而实现与模板的无关性，同时使代码的可压缩性更强。
-    * 更好的 TypeScript 支持 
-    * 在性能方面比 Vue2 快2倍，重写了虚拟DOM的实现
-    * Tree-shaking support  对使用到的功能或特性进行打包（按需打包）  
 
 15. v-for中 key 的作用
 
@@ -301,7 +295,7 @@
     * `#` 代表网页中的一个位置，其右面的字符就是该位置的标识符，**在http请求中不会包括#后面的字符**，对后端完全没有影响，因此改变hash不会重新加载页面， 用window.location.hash 读取 
     
 * history   没有了 `#` ，操作中不怕 前进和后退，但是就怕刷新，如果没有服务端的支持，**刷新之后就会请求服务端** ，由于找不到相应的支持响应 或者资源，就会报出 404页面 。
-    
+  
     * 如何转换成history模式呢？ 很简单，只需要定义router 的时候将 mode改成history 
     
       ```js
@@ -494,5 +488,39 @@
 
 ### Vue3.0的生命周期
 
+```js
+setup() 替代
 
+beforecreate -> use setup()
+created -> use setup()
+————————————————————————————————————————————————
+前面加on
+
+beforeMount -> onBeforeMount
+mounted -> onMounted
+beforeUpdate -> onbeforeUpdate
+updated -> onUpdated
+activated -> onActivated
+deactivated -> onDeactivated
+errorCaptured -> onErrorCaptured
+————————————————————————————————————————————————
+更改名称
+
+beforeDestroy -> onBeforeUnmount
+destroyed -> onUnmounted
+
+新加入
+
+onRenderTracked
+onRenderTriggered
+主要用于开发阶段调试使用
+————————————————
+```
+
+### Vue3的新特性
+
+* Composition API   可以提高代码逻辑的可复用性，从而实现与模板的无关性，同时使代码的可压缩性更强。
+* 更好的 `TypeScript` 支持 
+* 在性能方面比 Vue2 快2倍，重写了虚拟DOM的实现
+* `Tree-shaking support`  对使用到的功能或特性进行打包（按需打包）  
 

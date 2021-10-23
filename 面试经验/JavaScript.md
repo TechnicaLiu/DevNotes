@@ -850,7 +850,7 @@ isJson(data);
 
 1. 使用JSON自带的stringify方法来判断:
 
-   ```
+   ```js
    if(Json.stringify(Obj) == '{}' ){
        console.log('空对象');
    }
@@ -858,15 +858,26 @@ isJson(data);
 
 2. 使用ES6新增的 Object.keys（）来判断：
 
-   ```
+   ```js
    if(Object.keys(Obj).length < 0){
        console.log('空对象');
    }
    ```
 
-   
+## 对rest参数的理解
 
+扩展运算符被用在函数形参上时，它还可以把一个分离的参数序列整合成一个数组：
 
+```js
+function mutiple(...args) {   // ...args  [1,2,3,4]
+  let result = 1;
+  for (var val of args) {
+    result *= val;
+  }
+  return result;
+}
+mutiple(1, 2, 3, 4) // 24
+```
 
 
 

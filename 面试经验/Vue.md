@@ -73,6 +73,15 @@
 
    但是 Vue2所使用的 Object.defineProperty()方法   只能监听已存在的属性，对于新增删除属性却不可以 而且无法监听数组的变化。 所以Vue3.0   proxy代理  出现了！！ 
 
+   ```js
+   let p = new Proxy(target, handler)
+   // target 代表需要添加代理的对象
+   // handler用来自定义对象中的操作，比如自定义set/get 函数 
+   
+   ```
+
+   
+
    ![image-20210904144620247](../img/image-20210904144620247.png)
 
 6. Proxy代理 

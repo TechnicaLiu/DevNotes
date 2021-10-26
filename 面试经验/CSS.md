@@ -98,7 +98,7 @@
 
 grid布局：将容器划分成“行"和”列“，产生单元格，指定的项目所在的单元格，可以看作是二维布局。
 
-flex是弹性布局，用来为盒状模型提供最大的灵活性，任何一个容器都可以指定为 flex布局，行内元素也可以使用 flex布局 
+flex是弹性布局（轴线布局），只能指定”项目“针对轴线的位置，可以看作是一维布局，用来为盒状模型提供最大的灵活性，任何一个容器都可以指定为 flex布局，行内元素也可以使用 flex布局
 
 ## CSS3新特性举几个列子
 
@@ -210,7 +210,7 @@ inline-level box : display 属性为 inline , inline-block , inline-table 的元
 
 为了实现两列等高，可以给每列加上 padding-bottom:9999px;margin-bottom:-9999px ; 同时给父元素设置 overflow : hidden 
 
-![image-20210918094244194](E:\Typora\img\image-20210918094244194.png)
+![image-20210918094244194](https://gitee.com/youngstory/images/raw/master/img/202110231655240.png)
 
 ## 码出一个三角形
 
@@ -250,7 +250,7 @@ inline-level box : display 属性为 inline , inline-block , inline-table 的元
 
 ## 圣杯布局和双飞翼布局
 
-圣杯布局长这样 ！！！！![image-20210923195322237](https://gitee.com/youngstory/images/raw/master/img/image-20210923195322237.png)
+圣杯布局长这样 ！！！！![image-20210923195322237](https://gitee.com/youngstory/images/raw/master/img/202110231655475.png)
 
 **圣杯布局**基本要求：
 

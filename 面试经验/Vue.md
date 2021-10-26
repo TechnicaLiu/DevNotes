@@ -82,7 +82,7 @@
 
    
 
-   ![image-20210904144620247](../img/image-20210904144620247.png)
+   ![image-20210904144620247](https://gitee.com/youngstory/images/raw/master/img/202110231656967.png)
 
 6. Proxy代理 
 
@@ -96,9 +96,9 @@
    handler 里面的方法列表: handler.get  handler.set  handler.has  handler.deleteProterty 
    ```
 
-   ![image-20210904163428181](../img/image-20210904163428181.png)
+   ![image-20210904163428181](https://gitee.com/youngstory/images/raw/master/img/202110231656433.png)
 
-   ![image-20210904164245982](../img/image-20210904164245982.png)
+   ![image-20210904164245982](https://gitee.com/youngstory/images/raw/master/img/202110231656292.png)
 
 7. nextTick 
 

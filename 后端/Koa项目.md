@@ -1,26 +1,64 @@
-# KOA
+## **jwt的token验证**
 
-## koa项目 
+> **JWT就是一个加密的字符串，作为验证信息在计算机之间传递，只有可以访问持有对应正确的加密密钥的计算机才能对其进行解密，从而验证携带这个令牌（`Token`）的请求是否合法。**
 
-post  传送模块   bodyparse 
+基于Token的身份验证方法：
 
-<img src="E:/Typora/img/image-20211014092015250.png" alt="image-20211014092015250"  />
+```
+1.客户端使用用户名跟密码请求登录
+2.服务端收到请求，去验证用户名与密码
+3.验证成功后，服务端会签发一个 Token，再把这个 Token 发送给客户端
+4.客户端收到 Token 以后可以把它存储起来，比如放在 Cookie 里或者 Local Storage 里
+5.客户端每次向服务端请求资源的时候需要带着服务端签发的 Token
+6.服务端收到请求，然后去验证客户端请求里面带着的 Token，如果验证成功，就向客户端返回请求的数据
+```
 
-ejs 模板引擎  安装 koa-views 和  ejs  
+jwt 由 header，payload（数据）,signature（签名） 组成
 
-![image-20211014092100837](E:\Typora\img\image-20211014092100837.png)
+### payload（数据）
 
-传输日志 logger  
+Payload 里面是 Token 的具体内容，这些内容里面有一些是标准字段
 
-![image-20211014092241463](E:\Typora\img\image-20211014092241463.png)
+- iss：Issuer，发行者
+- sub：Subject，主题
+- aud：Audience，观众
+- exp：Expiration time，过期时间
+- nbf：Not before
+- iat：Issued at，发行时间
+- jti：JWT ID
+
+### signature
+
+JWT 的最后一部分是 Signature ，这部分内容有三个部分——
+  第一部分 ：Base64 编码的header。
+  第二部分：Base64 编码的payload。
+  第三部分：再用加密算法加密一下，加密的时候要放进去一个 `Secret` ，这个相当于是一个密码，这个密码秘密地存储在服务端，不得泄露。![image-20211025141715996](https://gitee.com/youngstory/images/raw/master/img/202110251417258.png)
+
+## 配置项
+
+**post  传送模块**  
+
+ bodyparse  可支持的文件类型解析  
+
+<img src="https://gitee.com/youngstory/images/raw/master/img/202110231653916.png" alt="image-20211014092015250"  />
+
+**ejs 模板引擎**  
+
+安装 koa-views 和  ejs  
+
+![image-20211014092100837](https://gitee.com/youngstory/images/raw/master/img/202110231653575.png)
+
+**传输日志 logger**  
+
+![image-20211014092241463](https://gitee.com/youngstory/images/raw/master/img/202110231653010.png)
 
 前后端分离  必须是json接口 
 
-get  ? 普通传值   用ctx.query对象来接收
+get  ? **普通传值   用ctx.query**对象来接收
 
-![image-20211014093411419](E:\Typora\img\image-20211014093411419.png?lastModify=1634278073)
+![image-20211023165431501](https://gitee.com/youngstory/images/raw/master/img/202110231654587.png)
 
-get  : 动态传值    用 ctx.params 来接收    前后端分离resetful 常用动态路由 ![image-20211014093354213](https://gitee.com/youngstory/images/raw/master/img/image-20211014093354213.png)
+get  : **动态传值    用 ctx.params** 来接收    前后端分离resetful 常用动态路由 ![image-20211014093354213](https://gitee.com/youngstory/images/raw/master/img/202110231654915.png)
 
 接收post传值  ctx.request.body
 

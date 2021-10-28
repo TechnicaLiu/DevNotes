@@ -71,7 +71,7 @@
 
    vue.js 则是**采用数据劫持结合发布者-订阅者模式**的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
-   但是 Vue2所使用的 Object.defineProperty()方法   只能监听已存在的属性，对于新增删除属性却不可以 而且无法监听数组的变化。 所以Vue3.0   proxy代理  出现了！！ 
+   但是 Vue2所使用的 Object.defineProperty()方法   只能监听已存在的属性，**对于新增删除属性却不可以 而且无法监听数组的变化**。 所以Vue3.0   proxy代理  出现了！！ 
 
    ```js
    let p = new Proxy(target, handler)
@@ -296,26 +296,24 @@
 
 17. 你怎么理解Vue中的diff算法 ？
 
-    在js中，渲染真实DOM的开销是非常大的，比如我们修改了某个数据，如和直接渲染到真实DOM，会引起整个DOM树的重绘和重排。这时我们就需要**根据真实DOM生成虚拟 DOM，当虚拟DOM的某个节点改变了就生成了一个新的 Vnode，然后新的Vnode和旧的Vnode进行比较，发现有不一样的就直接修改在真实DOM上。然后使旧的Vode的值 为新的Vnode** 
+    在js中，渲染真实DOM的开销是非常大的，比如我们修改了某个数据，直接渲染到真实DOM，会引起整个DOM树的重绘和重排。这时我们就需要**根据真实DOM生成虚拟 DOM，当虚拟DOM的某个节点改变了就生成了一个新的 Vnode，然后新的Vnode和旧的Vnode进行比较，发现有不一样的就直接修改在真实DOM上。然后使旧的Vode的值 为新的Vnode** 
 
     diff的过程就是patch函数，**比较新旧节点，一边比较一边给真实DOM打补丁**，在采取diff算法比较新旧节点的时候，**比较只会在同层级进行**，在`patch`方法中，首先进行树级别的比较 `new Vnode`不存在就删除 `old Vnode` `old Vnode` 不存在就增加新的`Vnode` 都存在就执行diff更新 当确定需要执行diff算法时，比较两个`Vnode`，包括三种类型操作：属性更新，文本更新，子节点更新 新老节点均有子节点，则对子节点进行`diff`操作，调用`updatechidren` 如果老节点没有子节点而新节点有子节点，先清空老节点的文本内容，然后为其新增子节点 如果新节点没有子节点，而老节点有子节点的时候，则移除该节点的所有子节点 老新老节点都没有子节点的时候，进行文本的替换
 
 18. Vue路由中的# hash模式和history模式 
     * `#` 代表网页中的一个位置，其右面的字符就是该位置的标识符，**在http请求中不会包括#后面的字符**，对后端完全没有影响，因此改变hash不会重新加载页面， 用window.location.hash 读取 
-    
-* history   没有了 `#` ，操作中不怕 前进和后退，但是就怕刷新，如果没有服务端的支持，**刷新之后就会请求服务端** ，由于找不到相应的支持响应 或者资源，就会报出 404页面 。
-  
+    * history   没有了 `#` ，操作中不怕 前进和后退，但是就怕刷新，如果没有服务端的支持，**刷新之后就会请求服务端** ，由于找不到相应的支持响应 或者资源，就会报出 404页面 。
     * 如何转换成history模式呢？ 很简单，只需要定义router 的时候将 mode改成history 
     
-      ```js
-      const router =new VueRouter({
-      	mode:'history',
-      	routes:[...]
-      })
-      ```
-    
-      
-    
+```js
+const router =new VueRouter({
+	mode:'history',
+	routes:[...]
+})
+```
+
+
+
 19. Vue如何实现按需加载 配合 webpack 设置 ？
 
     * Vue-router 配置 resolve + require 加载   （Vue异步组件技术）

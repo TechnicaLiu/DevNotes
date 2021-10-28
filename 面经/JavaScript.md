@@ -1,5 +1,19 @@
 # 基础
 
+## 解释性语言和编译型语言的区别
+
+1. **解释性语言**
+
+   由专门的解释器对源程序逐行解释成特定平台的机器码并立即执行，注意！是在代码执行时才开始翻译和执行 。 效率低  
+
+   代表：Javascript、python 等
+
+2. **编译型语言**
+
+   使用专门的编译器，针对特定的平台，将高级语言源代码一次性的编译成机器码。执行效率高 
+
+   代表： C、C++ 等
+
 ## 说几条 JavaScript 的基本规范
 
 * 不要在同一行声明多个变量
@@ -797,6 +811,7 @@ console.log(str2.replace(reg,""));
 Array.prototype.slice.call (arguments) 能够将**具有length属性的对象**转成数组，你只要将该slice方法绑定到这个对象上 
 
 ```js
+// 类数组
 var a = {
   length: 2,
   0: 'first',
@@ -900,6 +915,31 @@ function mutiple(...args) {   // ...args  [1,2,3,4]
 }
 mutiple(1, 2, 3, 4) // 24
 ```
+
+## JavaScript类数组对象的定义 ？
+
+一个拥有length 属性和若干索引属性的对象称为 类数组对象，不同于数组，不能使用数组的方法。
+
+常见的 类数组对象有 arguments  和 DOM 方法的结果 。 
+
+```js
+var arrlike = { '1':1, '2':2, '3':3, 'z':'z', 'a':'a', length: 10} 
+```
+
+如何使用它呢？  那就用数组的方法把它**转换成普通数组**。
+
+```js
+Array.prototype.slice.call(arrayLike);
+Array.prototype.splice.call(arrayLike,0);
+Array.prototype.concat.apply([],arrayLike);
+Array.from(arrayLike);
+```
+
+## js数组/字符串基础变换
+
+<img src="https://gitee.com/youngstory/images/raw/master/img/202110271548896.png" alt="image-20211027154841289"  />
+
+
 
 
 
@@ -1164,7 +1204,7 @@ obj.sayName();  // 我是小明
 
 ## es6中class语法及 与 prototype的关系
 
-* **constructor( ) 方法，是初始化自动调用的的构造方法**
+* **constructor( ) 方法，是初始化自动调用的的构造方法**  没有显示定义，也会默认添加
 
 * this关键字则代表实例对象。
 
@@ -1186,13 +1226,42 @@ obj.sayName();  // 我是小明
 
 * 类的内部所有定义的方法，都是不可枚举的。es5构造函数可以枚举。
 
+  ```js
+  class Point {
+    constructor(x, y) {
+      // ...
+    }
+    toString() {
+      // ...
+    }
+  }
+  Object.keys(Point.prototype)
+  // []
+  Object.getOwnPropertyNames(Point.prototype)
+  // ["constructor","toString"]
+  ```
+
+  
+
 ## 描述ES6中类的静态方法，静态属性。
 
-静态属性类相当于实例的原型，所有在类中定义的方法，都会被实例继承。
+类相当于实例的原型，所有在类中定义的方法，都会被实例继承。
 
-如果在一个方法前，加上static 关键字，就表示该**方法不会被实例继承，而是直接通过类来调用**，这就称为“**静态方法**” 。
+如果在一个方法前，加上`static` 关键字，就表示该**方法不会被实例继承，而是直接通过类来调用**，这就称为“**静态方法**” 。
 
 **静态属性指的是Class本身的属性**，即Class.propName,而不是定义在实例对象（this）上的属性。
+
+```js
+class Foo {
+  static classMethod() {
+    return 'hello';
+  }
+}
+Foo.classMethod() // 'hello'
+var foo = new Foo();
+foo.classMethod()
+// TypeError: foo.classMethod is not a function
+```
 
 特点：
 
@@ -1201,17 +1270,14 @@ obj.sayName();  // 我是小明
 * 父类的静态方法，可以被子类继承。
 
 ```js
-// 静态方法
 class Foo {
   static classMethod() {
-    return 'hello'
+    return 'hello';
   }
 }
-
-Foo.classMethod()  // hello 
-
-let foo = new Foo();
-foo.classMethod();  // 报错 foo.classMethod is not a function
+class Bar extends Foo {
+}
+Bar.classMethod() // 'hello'
 ```
 
 ## class类的继承

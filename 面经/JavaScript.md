@@ -460,6 +460,8 @@ fetch('http://example.com/movies.json')
 
 * Nginx  反向代理    以及  Apache 逆向代理
 
+  nginx的功能就是把请求转发给后面的服务器，决定哪台目标主机来处理当前请求。
+  
   安装 nginx ，配置location ，前端的地址和后端的地址**用nginx转发到同一个地址**下，如5500端口和3000端口都转到3003端口下
 
 ## 如何改变普通函数里的this指向问题？
@@ -939,7 +941,26 @@ Array.from(arrayLike);
 
 <img src="https://gitee.com/youngstory/images/raw/master/img/202110271548896.png" alt="image-20211027154841289"  />
 
+## 操作dom元素并修改样式文本
 
+```js
+<div class="demo">
+    <p id="p1">这是一个段落</p>
+  </div>
+  <script>
+    var para = document.createElement('p'); // 创建元素 
+    var node = document.createTextNode('这是一个新的段落');
+    para.appendChild(node); // 追加节点
+    var element = document.getElementsByClassName('demo')[0];
+    element.appendChild(para);
+    // element.insertBefore(新元素,旧元素)  // 在前面追加
+    //element.removeChild(para) // 移除元素
+    para.style.color = 'pink' // 设置颜色 
+    para.setAttribute('class', 'p2')// 用getAttribute来获取 
+  </script>
+```
+
+![image-20211030105520535](https://gitee.com/youngstory/images/raw/master/img/202110301055807.png)
 
 
 

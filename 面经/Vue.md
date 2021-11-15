@@ -15,23 +15,23 @@
            },
            beforeCreate() {
                console.log('------初始化前------')
-              
+                // 在当前阶段data、methods、computed以及watch上的数据和方法都不能被访问。
            },
            created () {
                console.log('------初始化完成------')
-              
+               // vue实例创建完成，可以访问data数据，和更改数据，但是不能操作dom
            },
            beforeMount () {
                console.log('------挂载前---------')
-               
+               // 挂载前，在这之前template模板已导入渲染函数编译，而当前阶段虚拟dom 已经创建完成即将开始渲染  
            },
            mounted () {
                console.log('------挂载完成---------')
-              
+              // 在当前阶段，真实dom挂载完毕，数据完成双向绑定，可以访问到 DOM节点 ，使用$refs属性对Dom进行操作。 
            },
            beforeUpdate () {
                console.log('------更新前---------')
-            
+           
            },
            updated() {
                console.log('------更新后---------')
@@ -40,22 +40,28 @@
        })
    _________________________________________________-
    
-   beforeDestroy 
-   Destroy
+   beforeDestroy    // 善后工作 如清除定时器 
+   Destroy 
    ```
 
-2. v-if 和 v-show 的 区别
+2. 你的接口请求一般放在哪个生命周期 ？
+
+   可以在钩子函数 created、beforeMount、mounted 中进行调用，因为在这三个钩子函数中，data 已经创建，可以将服务端端返回的数据进行赋值。
+   
+   **最好放在 created中**，因为他可以更快获取到服务器数据，减少页面等待时间 ，同时服务端渲染不支持 beforeMount、mounted  
+
+3. v-if 和 v-show 的 区别
 
    * v-show 会把HTML元素先渲染起来，符合条件就显示，不符合条件display就为None ,不显示，但是元素还在那
    * v-if 是真正意义上的条件渲染，浏览器会进行条件判断，true就会再渲染，否则不渲染DOM
    * Vue生命周期 ， 由于**v-if 会重新渲染，所以每次切换一次都会重新走一次生命周期**，v-show 由于只是控制显示隐藏，所以除了初始化渲染，其他时候都不会再走相关生命周期了。
 
-3. created和mounted的区别
+4. created和mounted的区别
 
    * created **在模板渲染成 html前调用**，主要用来初始化数据 
    * mounted **在模板渲染成html后调用**，通常是初始化页面完成后，再对HTM中的DOM节点进行操作 ，如echarts中，就必须得dom节点加载完后才能进行初始化配置
 
-4. 对Vue中 keep-alive的理解和使用 
+5. 对Vue中 keep-alive的理解和使用 
 
    > keep-alive 是Vue内置的一个组件，可以是被包含的组件保留状态，或避免重新渲染，也就是组件缓存
 
@@ -65,7 +71,7 @@
 
    deactivated ：当 keep-alive 包含的组件销毁的时候触发
 
-5. Vue双向数据绑定原理
+6. Vue双向数据绑定原理
 
    > 其核心是 Object.defineProperty()方法  
 
@@ -84,7 +90,7 @@
 
    ![image-20210904144620247](https://gitee.com/youngstory/images/raw/master/img/202110231656967.png)
 
-6. Proxy代理 
+7. Proxy代理 
 
    > 对目标对象的操作之前提供了拦截，可以对外界的操作进行过滤和改写，修改某些操作的默认行为，
 
@@ -100,7 +106,7 @@
 
    ![image-20210904164245982](https://gitee.com/youngstory/images/raw/master/img/202110231656292.png)
 
-7. nextTick 
+8. nextTick 
 
    > **Vue在观察到数据变化时并不是直接更新DOM，而是开启一个队列，并缓冲在同一事件循环中发生的所有数据改变。**在数据变化后要执行的某个操作，而这个操作需要使用随数据改变而改变的DOM结构的时候，这个操作都应该放进`Vue.nextTick()`的回调函数中。
 
@@ -128,13 +134,13 @@
      }
      ```
 
-8. .vue 页面级组件之间传值
+9. .vue 页面级组件之间传值
 
    * 通过vue-router 跳转链接 带参数传递 
    * 使用本地缓存localStorage 
    * 使用 vuex 数据管理传值。 
 
-9. Vue动态路由匹配
+10. Vue动态路由匹配
 
    在 path 属性中 指定路由跳转路径  path: '/user/:id',   一个路径参数 使用 : 标记，当匹配到一个路由时，参数值会被设置到 `this.$route.params`，可以在每个组件内使用。
 
@@ -156,7 +162,7 @@
    }
    ```
 
-10. vue-router有哪几种路由守卫 ？
+11. vue-router有哪几种路由守卫 ？
 
    * 全局守卫：beforeEach   作用:跳转前进行判断拦截
 
@@ -411,7 +417,34 @@ const router =new VueRouter({
     * computed 支持缓存，只有依赖数据发生变化，才会重新进行计算 ，watch不支持缓存 。
     * computed 可以函数依赖很多值，但是watch只能依赖一个值。
 
-25. pwa 是什么？
+25. watch 监听 
+
+    `handler`：监听数组或对象的属性时用到的方法
+
+    `deep`：**深度监听负责数据（对象）内部属性的变化**，可以在选项参数中指定 deep:true 。注意监听数组的变动不需要这么做。（即给每个对象属性添加 handle 监听函数 但是消耗很大，可以只监听 对应的对象的属性 ）
+
+    `immediate` 立即执行 : watch监听只有在数据变化时才会执行监听函数，父组件向子组件传值时，子组件props首次获取到父组件传来的值时，也需要执行 watch 监听函数，就需要设置 immediate  
+
+    ```js
+    data() {
+    		return {
+    			searchContainer:''
+    		};
+    	},
+    
+    searchContainer:{
+      	  handler:function(newval,oldval){
+          	console.log('searchContainer:',newval)
+        },
+        	deep:true//对象内部的属性监听，也叫深度监听
+      		immediate:true // 立即执行 
+    		},
+    
+    ```
+
+    
+
+26. pwa 是什么？
 
     > 渐进式网页，能确保每个用户都能打开网页响应式，PC、手机、平板、不管哪种格式，网页格式都能完美适配 
 
@@ -426,7 +459,7 @@ const router =new VueRouter({
     * 可安装：能够将web像app一样 添加到 桌面 
     * 可跳转：只要通过一个连接就可以跳转到 你的 web页面 
 
-26. iframe 的优缺点 ？
+27. iframe 的优缺点 ？
 
     > iframe 也称 嵌入式框架，它可以把一个网页的框架和内容嵌入在现有的网页中
 
@@ -442,7 +475,7 @@ const router =new VueRouter({
     * 即使内容为空，加载也需要时间 
     * 多数小型的移动设备（PDA 手机）无法完全显示框架，设备兼容性差。
 
-27. vue与react的异同
+28. vue与react的异同
 
     **相同点**
 
@@ -459,25 +492,25 @@ const router =new VueRouter({
     * state对象在react中 是不可变的，需要使用setState方法更新状态，而vue中，state不是必须的，数据由data在vue对象中管理。
     * 虚拟DOM不一样，vue会跟踪每一个组件的依赖关系，不需要重新渲染整个组件树，而react每当应用状态改变时，全部组件都会重新渲染，所以react 需要**shouldComponentUpdate**这个生命周期方法来进行控制。
 
-28. 组件data为什么要用函数 ？
+29. 组件data为什么要用函数 ？
 
     vue组件中data值不能为对象，因为**对象是引用类型**，组件可能会被多个实例同时引用，如果data值为对象，将导致多个实例共享一个对象，当一个组件改变其data值时，其他实例也会受到影响。
 
     只有当 data为 函数时，通过**return  返回对象的拷贝**，致使每个实例都有自己独立的对象， 实例之间可以互不影响的改变data属性值  。
 
-29. 对比jQuery, Vue有什么不同 ？
+30. 对比jQuery, Vue有什么不同 ？
 
     **jQuery 专注视图层，通过操作DOM去实现页面的一些逻辑 渲染**;Vue专注于数据层，通过数据的双向绑定，最终表现在DOM层面，减少了DOM 操作。
 
     Vue 使用了组件化思想，使得项目子集职责清晰，提高了开发效率，便于重复利用，协同开发。
 
-30. v-if 与 v-for 为什么不建议一起使用 ？
+31. v-if 与 v-for 为什么不建议一起使用 ？
 
     **v-for 优先级要高于 v-if**  ,如果两者同时存在，那v-for每次循环的时候 都需要进行 v-if 进行判断， 影响性能。
 
     解决方法： 在for 循环 外面 写一层 template , 然后用v-if 进行判断是否执行 
 
-31. Vue中的 errorHandler
+32. Vue中的 errorHandler
 
     指定组件的渲染和观察期间未捕获错误的处理函数。这个处理函数被调用时，可获取错误信息和 Vue 实例。
 
@@ -490,6 +523,50 @@ const router =new VueRouter({
     ```
 
     捕获组件生命周期钩子里的错误 捕获 Vue 自定义事件处理函数内部的错误了 捕获 `v-on` DOM 监听器内部抛出的错误
+
+33. 你都做过哪些Vue的性能优化 ？
+
+    编码阶段:
+
+    * 尽量减少data中的数据，data中的数据都会增加getter和setter，会收集对应的watcher
+    * v-if 和 v-for 不能连用  （解决：v-for外面套一层v-if）
+    * spa页面采用keep-live缓存组件
+    * for循环中，key保证唯一
+    * 使用路由懒加载，异步组件
+    * 防抖，节流
+    * 第三方模块按需导入
+    * 加载图片懒加载
+
+    SEO优化：
+
+    * 预渲染
+    * 服务端渲染SSR
+
+    打包优化：
+
+    * 压缩代码
+    * Tree Shaking 
+    * 使用cdn加载第三方模块
+    * sourceMao优化
+
+    用户体验：
+
+    * 骨架瓶
+    * PWA 
+
+34. vue.cli项目中src目录每个文件夹和文件的用法
+
+    assets 文件夹   放静态资源
+
+    components 放组件
+
+    router 定义路由的相关配置
+
+    view 视图 
+
+    app.vue是一个应用主组件；
+
+    main.js  是入口文件 
 
 ## Vue3.0
 
@@ -530,4 +607,11 @@ onRenderTriggered
 * 更好的 `TypeScript` 支持 
 * 在性能方面比 Vue2 快2倍，重写了虚拟DOM的实现
 * `Tree-shaking support`  对使用到的功能或特性进行打包（按需打包）  
+* proxy 替代 2.0中的 Object.defineProperty 
+
+### Vue3的setup
+
+1. 它是 CompositionAPI的入口 ，早于beforecreate和 created 生命周期之前
+2. 有两个参数   props 是组件传入的属性   context 
+3. setup中的 props 是响应式的， 不可以用解构，因为会消除他的响应式
 

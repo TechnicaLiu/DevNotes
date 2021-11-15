@@ -2,7 +2,7 @@ Gulp入门
 
 ## 定义
 
-gulp是grunt功能类似的前端项目构建工具，也是基于Node.js的自动任务运行器。
+gulp是grunt功能类似的**前端项目构建工具**，也是基于Node.js的自动任务运行器。
 
 能自动化的完成 javascript/coffee/sass/less/html/image/css等文件的合并，压缩，检查，监听文件变化，浏览器自动刷新，测试等任务。
 
@@ -121,7 +121,7 @@ gulp.task('html',function(){
 复制代码
 ```
 
-2. 压缩图片--->`**gulp-imagemin**`
+2. 压缩图片--->`gulp-imagemin`
 
 ```js
 var imageMin = require(gulp-imagemin);

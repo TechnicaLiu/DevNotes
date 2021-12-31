@@ -281,10 +281,34 @@ Ajax 的原理简单来说是在用户和服务器之间加了—个中间层( A
 
 ### 原生ajax 过程实现 ：
 
-* 创建XMLHttpRequest 对象
+* 创建XMLHttpRequest 对象   xhr= new XMLHttpRequest(  );
+
 * 调用 open 方法 传入三个参数 （get/post , url , 同步/异步）
-* 监听 onreadystatechange 事件，当readystate等于4时返回 responseText 
-* 调用send ( [string] )  方法 传递参数  ，string 只能传递post 数据 同时要设置 请求头 
+
+* 监听 onreadystatechange 事件，当readystate等于4 且 status == 200时返回 responseText 
+
+  ```js
+  xhr.readyState   存有 XMLHttpRequest 的状态  
+      0: 请求未初始化  // open()尚未调用
+      1: 服务器连接已建立  // open() 已调用
+      2: 请求已接收	// 接收到头信息
+      3: 请求处理中   // 接收到响应体  
+      4: 请求已完成，且响应已就绪  xhr.readyState == 4
+  
+  xhr.status   状态属性
+      200  成功
+      404  页面不存在
+      403  禁止访问
+      500  服务器错误
+      304  从缓存中读取数据
+  ```
+
+* 调用send ( [string] )  方法 传递参数  ，string 只能传递post 数据 同时要设置 请求头 设置MIME类型 
+
+  ```js
+  // 当使用POST方法 提交 表单数据（find=ppizza&zipcode=012）时， 设置 以下这个值 
+  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded"); 
+  ```
 
 ### Ajax解决浏览器缓存问题
 
@@ -292,6 +316,53 @@ Ajax 的原理简单来说是在用户和服务器之间加了—个中间层( A
 * 在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
 * 在URL后面加上一个随机数： "fresh=" + Math.random()。
 * 在URL后面加上时间搓："nowtime=" + new Date().getTime()
+
+### 实例
+
+普通的get请求
+
+![img](https://gitee.com/youngstory/images/raw/master/img/202112141409994.jpeg)
+
+使用表单编码数据发起一个 HTTP  POST请求 
+
+![image-20211228112542524](https://gitee.com/youngstory/images/raw/master/img/202112281125635.png)
+
+使用JSON编码主体来发起 HTTP POST请求 
+
+```js
+function postJson(url,data,callback){
+  var request= new XMLHttpRequest();
+  request.open('POST',url);
+  request.onreadystatechange=function(){
+    if(request.readyState === 4 && callback )
+    callback(request);
+  }
+  request.setRequestHeader('Content-Type',"application/json");
+  request.send(JSON.stringify(data));
+}
+```
+
+当HTML表单同时包含文件上传元素和其他元素时，我们需要采用 FormData 来 将请求主体分离成多个部分  
+
+```js
+function postJson(url, data, callback) {
+  var request = new XMLHttpRequest();
+  request.open('POST', url);
+  request.onreadystatechange = function () {
+    if (request.readyState === 4 && callback)
+      callback(request);
+  }
+  var formdata = new FormData();
+  for(var name in data){
+    if(!data.hasOwnProperty(name)) continue ; // 跳过继承属性 
+    var value = data[name];
+    if(typeof value === 'function') continue;  // 跳过方法 
+    formdata.append(name,value) ; // 将数据追加到 formdata  
+  }
+  // 当传入 FormData对象时，send() 会自动设置Content-Type头  
+  request.send(formdata);
+}
+```
 
 ### ajax axios 和  fetch 的区别 ？
 

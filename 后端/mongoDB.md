@@ -1,14 +1,11 @@
 ## 特点
 
 - 非关系型数据库NoSql (mongodb, radis) ,对象(键值对)
-
 - 高性能、易部署、 易使用，存储数据非常方便。
-
 - 支持的数据结构非常松散，是**类似于json**, 可以存储比较复杂的数据类型 。
-
 - **查询语言强大**，几乎可以实现关系型数据库单表查询的绝大部分功能，还支持对数据建立索引
-
 - 一个MongoDB 实例可以包含一组数据库，一个DataBase 可以包含一组Collection（集合），一个集合可以包含一组Document（文档）。
+- 默认端口号 ： **27017** 
 
 ## 基本模型
 
@@ -105,8 +102,9 @@
     已有的 _id 是修改，不存在的_id 是添加
 
 - 删除   
-  - db.manager.remove({id: 8});
-
+  
+- db.manager.remove({id: 8});
+  
 - 分组
 
   - $sum:求和     db.user.aggregate([{$group:{_id:"$sex",sum:{$sum:1}}}])：
@@ -153,4 +151,6 @@
 
 - 设计表结构   Schema![img](https://gitee.com/youngstory/images/raw/master/img/202111131650229.png)
 
-- 使用![img](https://gitee.com/youngstory/images/raw/master/img/202111131650035.png)
+- 使用
+
+  ![img](https://gitee.com/youngstory/images/raw/master/img/202111131650035.png)

@@ -1155,6 +1155,8 @@ console.log(it2.next()); // y = undefined { value: NaN, done: false }
 console.log(it2.next());//  z = undefined { value: NaN, done: true } 
 ```
 
+
+
 async...await  是 generator 的语法糖，实际操作比如 koa框架用 可以将异步转为同步ajax数据通讯
 
 特点：
@@ -1202,6 +1204,7 @@ Iterator的作用有三个：
 * NodeList 对象
 
 // 接口实现 Iterator
+// 遍历器对象本质上就是一个指针对象。每次调用next方法都会返回数据结构的当前成员的信息 (value 和 done 两个属性的对象 )
 function getIterator(list) {
     var i = 0;
     return {

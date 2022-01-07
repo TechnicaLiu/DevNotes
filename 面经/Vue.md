@@ -144,7 +144,7 @@
 
    在 path 属性中 指定路由跳转路径  path: '/user/:id',   一个路径参数 使用 : 标记，当匹配到一个路由时，参数值会被设置到 `this.$route.params`，可以在每个组件内使用。
 
-   ```
+   ```js
    const User = {
      template: '<div>User</div>'
    }

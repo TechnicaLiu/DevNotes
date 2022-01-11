@@ -1,3 +1,42 @@
+## Koa基本运行原理
+
+> koa采用的是洋葱圈模型，先执行完next()前面的语句，匹配完路由后，再返回执行next后面的语句
+
+代码示例：
+
+```js
+var Koa = require('koa');
+var router = require('koa-router')();
+var app = new Koa();
+
+// 中间件 
+
+app.use(async(ctx,next)=>{
+  console.log('1.这是第一个中间件');
+  await next();
+  console.log('5.匹配路由完成以后又会返回来执行中间件');
+})
+
+app.use(async(ctx,next)=>{
+  console.log('2. 这是第二个中间件 ');
+  await next();
+  console.log('4. 匹配路由完成以后又会返回来执行中间件');
+})
+router.get('/',async(ctx)=>{
+  ctx.body='首页'
+})
+
+router.get('/new', async(ctx,next)=>{
+  console.log('3. 匹配到了news这个路由');
+  ctx.body='这是一个新闻'
+})
+app.use(router.routes()) // 启动路由
+app.use(router.allowedMethods());
+app.listen(3002)
+
+
+```
+
 ## **jwt的token验证**
 
 > **JWT就是一个加密的字符串，作为验证信息在计算机之间传递，只有可以访问持有对应正确的加密密钥的计算机才能对其进行解密，从而验证携带这个令牌（`Token`）的请求是否合法。**

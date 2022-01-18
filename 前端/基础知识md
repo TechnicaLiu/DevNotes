@@ -79,6 +79,110 @@ timedCount();
 - document 对象
 - parent 对象
 
+## SVG
+
+> SVG(可缩放矢量图形) 是一个由XML定义的文件，所以可以用任何文本编辑器创建。
+
+### 什么是SVG?
+
+SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图形质量不会有所损失。同时他也存在以下优势：
+
+1. SVG与JPEG和GIF图像比起来，尺寸更小，且可压缩性更强。
+2. SVG可在图像质量不下降的情况下被放大。
+3. SVG 文件是纯粹的 XML。
+
+### 示例
+
+```xml
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <circle cx="100" cy="50" r="40" stroke="black"
+  stroke-width="2" fill="red" />
+</svg>
+
+```
+
+效果：
+
+<img src="https://gitee.com/youngstory/images/raw/master/img/202201111409769.png" alt="image-20220111140925478" style="zoom: 50%;" />
+
+代码解析：
+
+* `<xml>`第一行包含了 XML 声明。
+
+* standalone 属性规定此 SVG 文件是否是"独立的"，或含有对外部文件的引用，standalone="no" 意味着 SVG 文档会引用一个外部文件 - 在这里，是 DTD 文件。
+* `<svg></svg>是表示SVG代码，相当于开始标签和结束标签，这是根元素。`
+
+* width和height属性可设置此 SVG文档的宽度和高度。
+* version属性可定义所使用的SVG版本。
+* xmlns 属性可定义SVG命名空间。
+* `<circle> `用来创建一个圆。cx 和 cy 属性定义圆中心的 x 和 y 坐标。如果忽略这两个属性，那么圆点会被设置为 (0, 0)。r 属性定义圆的半径。
+
+* stroke 和 stroke-width 属性控制如何显示形状的轮廓。我们把圆的轮廓设置为 2px 宽，黑边框。
+
+* fill 属性设置形状内的颜色。我们把填充颜色设置为红色。
+
+* 关闭标签的作用是关闭 SVG 元素和文档本身。
+
+### 应用场景
+
+**ICON图标**
+
+摆脱了以往 通切各种倍数的图来适配高清设备的束缚，因为svg图像放大多少倍质量都不会变
+
+<img src="https://gitee.com/youngstory/images/raw/master/img/202201111425222.png" alt="image-20220111142549125" style="zoom:80%;" />
+
+同时我们可以通过改变他的属性来轻松的给他更换颜色 。
+
+**ICOM Morphing动画** 
+
+所谓Morphing动画是表示，同一个模型，从一个形状变到另一个形状。这种动画交互会更加的细腻。
+
+**在文字中的应用**
+
+如通过代码来实现 渐变文字效果
+
+```js
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="400"> 
+
+    <title>Applying a gradient background to text in SVG</title> 
+
+    <defs>
+
+       <linearGradient id="filler" x="0%" y="100%">
+
+           <stop stop-color="olivedrab" offset="0%"></stop>
+
+           <stop stop-color="peru" offset="20%"></stop>
+
+           <stop stop-color="goldenrod" offset="40%"></stop>
+
+           <stop stop-color="firebrick" offset="60%"></stop>
+
+           <stop stop-color="thistle" offset="80%"></stop>
+
+           <stop stop-color="sandybrown" offset="100%"></stop>
+
+       </linearGradient>
+
+    </defs>
+
+    <text x="100" y="70%" font-size="205" fill="url(#filler)">ISUX Design</text>
+
+</svg>
+```
+
+效果：
+
+![image-20220111144015004](https://gitee.com/youngstory/images/raw/master/img/202201111440141.png)
+
+
+
+
+
 # CSS
 
 ## SCSS
@@ -363,6 +467,270 @@ Less也是一种动态样式语言. 对CSS赋予了动态语言的特性，如�
 3. 引入与普通的css 的引入无差异
 
 # JS
+
+## let命令和const命令
+
+### let命令
+
+#### 暂时性死区 
+
+只要块级作用域内存在 let 和 const命令，它所声明的变量就“绑定”这个区域，不再受外部的影响。
+
+在代码块内，使用let命令声明变量之前，该变量是不可用的。称为：“暂时性死区”
+
+举例：
+
+```js
+var  tmp = 123;
+if(true){
+  tmp = 'abc'; // 不受外界影响  ReferenceError
+  let tmp 
+  console.log(tmp) // undefined  暂时性死区 
+}
+```
+
+#### 不允许重复声明
+
+在同一个作用域内，let不允许重复声明同一个变量 。
+
+```js
+// 报错 
+function(){
+  let a = 1;
+  let a = 10 ; 
+}
+```
+
+### const命令
+
+> const 声明一个只读的常量，一旦声明，常量的值就不能改变。
+
+需要注意的是：
+
+1. const 一旦 声明变量，就必须立即初始化。不能先声明后赋值
+2. const 同样 不存在变量提升， 具有暂时性死区。
+
+const 实际上保证的并不是变量的值不得改动，而是变量指向的那个内存地址不得改动。对于**简单型数据，其值就保存在内存地址中**，因此等同于常量， 而对于**复合类型的数据，变量指向的内存地址保存的只是一个指针**，const只能保证这个指针是固定的，至于它指向的数据结构是不是可变的，这完全不能控制。
+
+```js
+const foo ={};
+foo.prop = 123;
+foo.prop // 123  
+
+foo ={} // 报错，因为指向了另一个对象 ，同理数组也是一样的 
+```
+
+如果真的想将对象冻结，可以使用 Object.freeze方法.
+
+```js
+const foo = Object.freeze( { } );
+// 常规模式下，下面一行不起作用 ；
+// 严格模式下，该行会报错
+foo.prop=123 ;
+```
+
+### 顶层对象的属性
+
+顶层对象在浏览器中指的是window对象，在Node环境中指的是 global对象。
+
+在ES5中，顶层对象的属性与全局变量是等价的。存在潜在的副作用，如顶层对象的属性是到处都可以读写的，不利于模块化编程，其次， window 也有其实体含义 -- 即浏览器对象。
+
+```js
+window.a = 1;
+a // 1
+
+a = 2 ;
+window.a // 2
+```
+
+在ES6中，为了规避这些错误，做出了改善：
+
+1. var命令和function命令声明的全局变量依旧是顶层对象的属性
+2. let 命令，const命令，class命令声明的全局变量不属于顶层对象的属性。
+
+## 变量的解构赋值
+
+> 在解构赋值中，等号右侧是一个数组或对象，指定左侧一个或多个变量的语法和右侧的数组和对象直接量的语法保持一致。
+
+常用于 函数返回一组数据时进行解构赋值。
+
+```js
+let {a,b} ={a:123,b:456} // 得到变量a为123 ， b 为456 
+let [x,y] = [1,2] // 等价于 x=1，y=2
+```
+
+**在解构赋值中，右侧的的数组中所包含的元素不必和左边的变量一一对应，左侧多余的变量的赋值为undefined,而右侧多余的值则会忽略。** 
+
+### 链式解构赋值
+
+```js
+ let first, second, all;
+ all = [first, second] = [1, 2, 3, 4];
+ console.log(first, second, all); // first=1  second =2  all =[1,2,3,4]
+```
+
+### 嵌套解构赋值
+
+```js
+let [one,[twoA,twoB]] = [1,[2,2.5],3]; 
+// one=1,twoA=2,twoB=2.5
+```
+
+### 对象解构赋值 
+
+```js
+  let transparent={r:0.0,g:0.0,b:0.0,a:1.1};
+  let {r:red,g:green,b:blue} = transparent   // red = 0.0.green=0.0 blue=0.0
+```
+
+### 字符串的解构赋值
+
+字符串在解构赋值的同时，会被转换了类数组的对象 。
+
+```js
+const [a,b,c,d] = 'hello'
+a // 'h'
+b // 'e'
+c // 'l'
+d // 'l'
+
+```
+
+类数组都有一个length属性，我们可以对这个属性进行解构
+
+```js
+let {length : len} = 'hello'
+len // 5 
+```
+
+### 函数参数的解构赋值
+
+函数的参数也可以使用解构赋值。
+
+```js
+function add([x,y]){
+  return x+y;
+}
+add([1,2])  // 3
+```
+
+函数add的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量 x 和 y 。
+
+```js
+[[1,2],[3,4]].map(([a,b])=> a+b)
+ // [3,7]
+```
+
+函数参数的解构也可以使用默认值
+
+```js
+function move({x=0,y=0} = {}){
+  return [x,y];
+}
+move({x:3,y:8})  // [3,8]
+move(); // [0,0]
+```
+
+以上函数中，参数是一个对象，通过对对象进行解构，得到x和y的值。如果没有传参，就使用默认的变量值
+
+### 用途
+
+#### 交换变量
+
+```js
+let x = 1 ;
+let y = 2 ;
+[x,y] = [y,x] ;
+```
+
+#### 从函数返回多个值
+
+从函数返回多个值我们习惯于将它包装到一个数组/对象上。我们可以解构出他们的值
+
+```js
+// 解构返回的数组， 对象同理 
+function example(){
+  return [1,2,3]
+}
+let [a,b,c] = example() 
+a // 1 
+b// 2
+c // 3 
+```
+
+#### 函数参数的定义
+
+解构赋值可以方便地将一组参数与变量名对应起来。
+
+```js
+// 参数是一组有次序地值
+ function f([x, y, z]) {
+     ....
+  }
+ f([1, 2, 3])
+// 同时也支持无次序地参数 
+```
+
+#### 提取JSON数据
+
+```js
+ let jsonData = {
+      id: 42,
+      myname: 'Abin',
+      hobby: ['basketball', 'volleyball']
+    }
+    let {
+      id,
+      myname,
+      hobby
+    } = jsonData;
+console.log(id, myname, hobby);
+// 42 'Abin'  ['basketball', 'volleyball']
+
+```
+
+#### 函数参数的默认值
+
+```js
+$.ajax=function(url,{
+  async=true,
+  beforesend=function(){},
+  cache = true
+}){
+  // .. do stuff
+}
+```
+
+#### 遍历Map解构
+
+任何部署了Iterator接口的对象都可以用 for .. of 循环遍历。Map结构支持 Iterator接口，我们可以通过解构 来 拿到 它的键和值。
+
+```js
+var map = new Map();
+    map.set('first', 'hello');
+    map.set('second', 'world');
+    for (let [key, value] of map) {
+      console.log(key + ' is ' + value);  // 输出 它的 键  和 值
+    }   
+    for (let [key] of map) {
+      console.log(key);  // 输出 它的 键 
+    }
+    for (let [, value] of map) {  
+      console.log(value);  //输出 它的 值
+    }
+```
+
+#### 输入模块的指定方法
+
+加载模块式，我们可以通过解构来指定我们需要的方法
+
+```js
+const {SourceMapConsumer,SouceNode} = require("souce-map")
+```
+
+
+
+
 
 ## 值、类型
 
@@ -1125,40 +1493,7 @@ async function f () {
 
 ## 扩展
 
-### 解构赋值
 
-> 在解构赋值中，等号右侧是一个数组或对象，指定左侧一个或多个变量的语法和右侧的数组和对象直接量的语法保持一致。
-
-常用于 函数返回一组数据时进行解构赋值。
-
-```js
-let {a,b} ={a:123,b:456} // 得到变量a为123 ， b 为456 
-let [x,y] = [1,2] // 等价于 x=1，y=2
-```
-
-**在解构赋值中，右侧的的数组中所包含的元素不必和左边的变量一一对应，左侧多余的变量的赋值为undefined,而右侧多余的值则会忽略。**
-
-链式解构赋值：
-
-```js
- let first, second, all;
- all = [first, second] = [1, 2, 3, 4];
- console.log(first, second, all); // first=1  second =2  all =[1,2,3,4]
-```
-
-嵌套解构赋值
-
-```js
-let [one,[twoA,twoB]] = [1,[2,2.5],3]; 
-// one=1,twoA=2,twoB=2.5
-```
-
-对象解构赋值 
-
-```js
-  let transparent={r:0.0,g:0.0,b:0.0,a:1.1};
-  let {r:red,g:green,b:blue} = transparent   // red = 0.0.green=0.0 blue=0.0
-```
 
 ## 客户端JS
 

@@ -466,7 +466,7 @@ Less也是一种动态样式语言. 对CSS赋予了动态语言的特性，如�
 2. 不支持 if  elseif  语句 
 3. 引入与普通的css 的引入无差异
 
-# JS
+# JavaScript
 
 ## let命令和const命令
 
@@ -993,7 +993,64 @@ delete book.author // book不再有属性 author
 
 ## 数组
 
-### 删除
+### Array.from
+
+> 用于将两类对象转为真正的数组，类似数组的对象和可遍历对象。
+
+类似数组的对象: 如DOM操作返回的NodeList集合、函数内部arguments对象 
+
+可遍历对象 ： 如字符串， Set ，Map
+
+```js
+// 将NodeList转为真正的数组，才可以使用 forEach 
+let pList = document.querySelectorAll('p');
+Array.from(pList).forEach(item => {
+  console.log(item);
+})
+
+// 将字符串转为数组
+Array.from('hello') // ['h','e','l','l','o']
+```
+
+### Array.of()
+
+> Array.of方法用于将一组值转换为数组.
+
+```js
+Array.of(3,11,8) // [3,11,8]
+Array.of(3)  // [3]
+```
+
+### 数组实例copyWithin( )
+
+> 在当前数组内部将指定位置的成员复制到其他位置。（会覆盖原有成员），然后返回当前数组。 （修改原数组）
+
+`Array.prototype.copyWithin(target,start,end)`
+
+接收三个参数：
+
+* target：从该位置开始替换数据
+* start（可选）: 从该位置开始读取数据，默认为0.如果为负值，表示倒数。
+* end (可选)：到该位置前停止读取数据，默认等于数组长度，如果为负值，表示倒数。
+
+```js
+let res = [1, 2, 3, 4, 5].copyWithin(0, 4);
+console.log(res); //(5) [5, 2, 3, 4, 5]
+
+[1, 2, 3, 4, 5].copyWithin (0, -2, -1) 
+ //(5) [4, 2, 3, 4, 5]
+
+```
+
+### 数组实例的 entries()  keys() values()
+
+> entries()  keys() values() 都是用来遍历数组的。entries() 是对键值对的遍历，keys()是对键的遍历，values( ) 是对值的遍历。
+
+
+
+
+
+### delete
 
 删除数组元素  除了  pop shift之外，还可以用 delete 运算符
 
@@ -1130,9 +1187,64 @@ length: 3
     console.log(arr)
     ```
 
-    
+## 字符串
 
-## 作为数组的字符串
+### includes()  startsWith() endWith()
+
+includes（）：返回布尔值，表示是否找到了参数字符串。
+
+startsWith( ) :  返回布尔值，表示参数字符串是否在源字符串的头部，
+
+endsWith( ) : 返回布尔值，表示参数字符串是否在源字符串的尾部。
+
+```js
+var s='hello world!';
+s.startsWith('hello')  // true
+s.endsWith('!') // true 
+s.includes('o') // true 
+```
+
+同时以上这三个方法接收第二个参数，即表示从n位置开始搜索
+
+```js
+var s='hello world!';
+s.startsWith('world',6)  // true  从下标为n的位置开始到结束
+s.endsWith('hello',5) // true    // 与其他两个方法不同，本方法表示前n个字符
+s.includes('hello',6) // false  从下标为n的位置开始到结束
+```
+
+### padStart()  padEnd()
+
+> 字符串不全，如果某个字符串不够指定长度，会在头部/尾部 进行补全。
+
+需要传递两个参数 ，第一个参数表示字符串的最小长度，第二个参数表示用来补全的字符串。
+
+若超过指定长度，则将补全字符串截取一部分。
+
+```js
+ var result = 'world'.padStart(10, 'hello');
+ console.log(result);  // helloworld
+```
+
+用途：
+
+1. 为数值补全指定位数。
+
+   ```JS
+   '1'.padStart(10,'0') // '0000000001
+   ```
+
+2. 提示字符串格式.
+
+   ```js
+   '12'.padStart(10,'YYYY--MM-DD')
+   ```
+
+   
+
+
+
+### 作为数组的字符串
 
 字符串的行为类似于 只读的数组 ，即我们 可以通过 **方括号[索引]  /  charAt(0)** 来访问单个字符。
 
@@ -1155,15 +1267,91 @@ console.log(result);  // J v s c r p t
 
 ### 函数名的定义 
 
-**多以 动词或者动词为前缀的词组 来定义函数**，提高代码可读性。
+1. **多以 动词或者动词为前缀的词组 来定义函数**，提高代码可读性。
 
-当函数名包含多个单词时，一种情况是 以 下划线 分隔，另一种是  除首个单词外的其他单词 首字母大写。
+2. 当函数名包含多个单词时，一种情况是 以 下划线 分隔，另一种是  除首个单词外的其他单词 首字母大写。
 
-当函数是内部函数或者私有函数，函数名通常以下划线为前缀。
+3. **当函数是内部函数或者私有函数，函数名通常以下划线为前缀。**
 
-对于经常调用的函数，我们可以指定短函数名。
+4. 对于经常调用的函数，我们可以指定短函数名。
 
-## 异步函数
+### 函数参数的默认值
+
+默认值直接写在参数定义的后面。
+
+```js
+ // 参数变量是默认声明的，不能用let或 const 再次声明 
+// 参数的变量不可相同 
+function log(x, y = 'world') {
+      return [x, y]
+    }
+    console.log(log('hello')); // ['hello', 'world']
+    console.log(log('hello', 'Abin')); // ['hello', 'Abin']
+    console.log(log('hello', '')); // ['hello','']
+```
+
+这样做既有利于代码的阅读 而且 有利于 将来的代码优化，即使参数不传也不会报错。
+
+### 参数默认值的位置
+
+通常情况下，定义了默认值的参数应该是函数的尾参数，容易看出省略了哪些参数。如果非尾部的参数设置默认值，这个参数传参是无法省略的。
+
+```js
+function f(x=1,y){
+  return [x,y];
+}
+f(); // [1,undefined]
+f(2); // [2,undefined]
+f(,1) // error 报错
+f(undefined,1) // [1,1] // 除非 显示输入 undefined否则报错
+```
+
+需要注意的是 函数的length属性 只包括 没有定义默认值的参数个数 
+
+```js
+(function(a=0,b,c){}).length  // 2 
+```
+
+### rest参数
+
+形式为 ( ...变量名 )，用于获取多余的参数，**存到一个变量数组**中，代替了 arguments (具有length属性的伪数组)。
+
+```js
+  function add(x, ...rest) {
+      console.log(x); // 1
+      console.log(rest); // [2,3,4]
+    }
+    add(1, 2, 3, 4)
+```
+
+**注意！ rest参数只能放在函数参数的最后。** 即 只能是最后一个参数 
+
+### name属性
+
+函数的name属性返回该函数的函数名。
+
+```js
+function foo(){}
+foo.name // 'foo'
+```
+
+如果将一个匿名函数赋值给一个变量，则name属性返回实际的函数名
+
+```js
+var f = function(){}
+f.name  // ES5中返回一个空字符串 ' '  ， ES6中返回 ‘f’
+```
+
+如果将一个具名函数赋值给一个变量，则ES5和ES6都会 返回具名函数原本的名字
+
+```js
+const bar = function baz(){}
+bar.name  // baz 
+```
+
+
+
+## **异步函数**
 
 > 在计算量大时间长的操作时，或者不想为等待某个异步操作而阻塞线程执行，就选择异步函数
 
@@ -1489,11 +1677,205 @@ async function f () {
 	return await (’ hello world ’ ) ;
 ```
 
+## 原型/原型链
+
+### 函数的原型 
+
+两者比较着看：
+
+prototype : 原型  =》   函数的一个属性
+
+`__proto__` 原型链（连接点）  =》 对象Object的一个属性 
+
+**对象的 `__proto__`  保存着该对象的构造函数的prototype**   
 
 
-## 扩展
 
+ 每个函数都会有一个prototype属性 。即显示原型属性，默认指向一个空的Object对象 
 
+每个实例对象都有一个`__proto__` ,可称为隐式原型
+
+**对象的隐式原型的值为其对应构造函数的显示原型的值** 
+
+<img src="https://gitee.com/youngstory/images/raw/master/img/202110252013455.png" alt="image-20211025201341306"  />
+
+```js
+ function Animals() {
+      
+    }
+ var cat = new Animals(); // this指向 实例对象
+ console.log(cat.__proto__ === Animals.prototype); // true 
+```
+
+```js
+ function Animals() {
+      this.a = 1;
+
+    }
+    var cat = new Animals(); // this指向 实例对象
+    Animals.prototype.b = 2;
+    Object.prototype.c = 3;
+    console.log(cat.a); // 1 
+    console.log(cat.b); // 2  自身没有b属性就会沿着原型链往上找
+```
+
+Function和 Object 
+
+```js
+ console.log(Function.__proto__); // ƒ () { [native code] }
+    console.log(Function.prototype); // ƒ () { [native code] } 
+    //  Function.__proto__ ===  Function.prototype
+    console.log(Object.__proto__ === Function.prototype); // true 
+```
+
+### **判断属性是否存在 ？** 
+
+```js
+ function Test() {
+      this.a = 1;
+      this.b = 2
+    }
+    Test.prototype.c = 3;
+    var demo = new Test();
+    console.log(demo.hasOwnProperty('c')); // 不包含原型链上的 只是自身属性  
+    console.log('c' in demo);  // 包含原型链 
+```
+
+constructor  指向实例的构造函数 ，是允许更改的
+
+### **原型链继承**
+
+优点：父类新增方法属性，子类都能访问到，简单易于实现
+
+缺点：**子类的实例共享了父类构造函数的引用属性**  不能传参
+
+```js
+// 定义一个动物类 
+function Animal(name) {
+  this.name = name || 'Animal';
+  // 实例方法
+  this.sleep = function () {
+    console.log(this.name + '正在睡觉');
+  }
+
+}
+// 原型方法
+Animal.prototype.eat = function (food) {
+  console.log(this.name + '正在吃' + food);
+}
+
+// 原型链继承  
+// 将父类的实例作为子类的原型 
+// 缺点： 子类的实例共享了父类构造函数的引用值(数组 对象等)  不能传参
+function Cat() {
+
+}
+Cat.prototype = new Animal();
+Cat.prototype.name = 'cat';
+
+var cat = new Cat();
+cat.eat('fish');//cat正在吃fish
+cat.sleep();//cat正在睡觉
+```
+
+### 构造函数继承
+
+优点：子类构造函数 借用 父类的构造函数   解决了引用值共享的问题
+
+缺点： 没有办法拿到原型上的方法；
+
+```js
+ // 由于原型链继承  Cat.prototype = new Animals()  存在引用共享的问题 所以 采用构造函数 
+    // 借用构造函数继承  
+    function Animals() {
+      // this.a = 1;
+      this.a = [1, 2, 3, 4, 5]
+    }
+    Animals.prototype.say = function () {
+      console.log('会叫');
+    }
+
+    function Cat() {
+      Animals.call(this);
+    }
+
+    var cat1 = new Cat();
+    var cat2 = new Cat();
+    cat1.a.push(6);
+    console.log(cat1.a); // 1 2 3 4 5 6
+    console.log(cat2.a); // 1 2 3 4 5
+```
+
+### **组合继承**（伪经典继承）
+
+优点：可传参   
+
+缺点：调用了两次父类的构造函数，造成了不必要的消耗
+
+```js
+// 组合继承
+// 构造函数继承+ 原型链继承 
+// 缺点： 调用了两次父类的构造函数，造成了不必要的消耗，父类方法可复用 
+// 优点可传参，不共享父类引用属性 
+    function Animals() {
+      // this.a = 1;
+      this.a = [1, 2, 3, 4, 5]
+    }
+    Animals.prototype.say = function () {
+      console.log('会叫');
+    }
+
+    function Cat() {
+      Animals.call(this);
+    }
+    Cat.prototype = new Animals();
+    var cat1 = new Cat();
+    var cat2 = new Cat();
+    console.log(cat1);
+    cat1.a.push(6);
+    cat1.say() // 会叫
+    console.log(cat2.a); // 1 2 3 4 5
+```
+
+### **寄生组合继承**（经典继承）
+
+优点：可传参，不会创建多余的实例占用内存 ，可通过Object.assign实现多继承
+
+缺点：
+
+```js
+// 寄生组合继承 
+function Cat(name,age){
+  Father.call(this,name);
+  this.age=age
+}
+Cat.prototype=Object.create(Animal.prototype)
+Cat.prototype.constructor=Cat
+var cat = new Cat('MING', 20)
+console.log(cat);
+```
+
+### **ES6的extend**
+
+```js
+class Animal {
+	constructor (name) {
+	this.name = name
+	}
+	showName () {
+		alert(this.name)
+	}
+}
+class Cat extends Animal {
+	constructor (name) {
+		super(name)
+	}
+	sayMy () {
+		super.showName()
+	}
+}
+
+```
 
 ## 客户端JS
 
@@ -1568,4 +1950,53 @@ let documentHeight = document.documentElement.offsetHeight;
 let viewportHeigth = window.innerHeight;
 window.scrollTo(0, documentHeight - viewportHeigth)
 ```
+
+# ES2020
+
+## ?? 双问号
+
+在双问号的左边如果是`null，undefined`时，就返回右边的值，如果没有就返回左边的值。
+
+与 || 语法相同，不同的是，左边满足 false条件，返回右边的值。
+
+```js
+const foo = null ?? 'myschool'
+// myschool
+```
+
+# 前端工程化
+
+## 四步走
+
+- 模块化 (js的模块化，css的模块化，资源的模块化)
+
+- 组件化（复用现有的UI结构，样式，行为）
+
+- 规范化 （目录结构的划分，编码规范化，接口规范化，文档规范化 git分支管理）
+
+- 自动化 （自动化构建，自动部署，自动化测试 ）
+
+## 工具 
+
+- webpack  提供了友好的前端模块化开发支持，以及代码压缩混淆。处理浏览器js的兼容性 ，性能优化
+
+- parcel   一款0配置的打包工具,而且直接使用即可,打包速度快,Parcel 使用 worker 进程去启用多核编译。同时有文件系统缓存，即使在重启构建后也能快速再编译。
+
+- MVC 
+
+  - Model（模型） - 模型代表一个存取数据的对象     
+
+  - View（视图） - 视图代表模型包含的数据的可视化, 也就是我们看到的页面    
+
+  -  Controller（控制器） - 控制器作用于模型和视图上。它控制数据流向模型对象，并在数据变化时更新视图。它使视图与模型分离开。
+
+  - 典型的框架就是 java领域的 Spring  Structs   Hibernate ![img](https://api2.mubu.com/v3/document_image/48a3a2b8-bef1-472c-bfab-738b6346d62f-2519832.jpg)![img](https://api2.mubu.com/v3/document_image/29a2c0ae-6b49-4c8c-ba2b-407d012c7fa6-2519832.jpg)
+
+- MVVM
+
+  - 在MVVM框架下视图和模型是不能直接通信的，只能通过ViewModel进行交互，它能够监听到数据的变化，然后通知视图进行自动更新，而当用户操作视图时，VM也能监听到视图的变化，然后通知数据做相应改动，这实际上就实现了数据的双向绑定。并且V和VM可以进行通信。![img](https://api2.mubu.com/v3/document_image/1fc7b8e5-608c-438c-82b6-6e051c03d4af-2519832.jpg)
+
+  - ViewModel 通过双向数据绑定把 View 层和 Model 层连接了起来，而View 和 Model 之间的同步工作完全是自动的，无需人为干涉，因此开发者只需关注业务逻辑，不需要手动操作DOM， 不需要关注数据状态的同步问题，复杂的数据状态维护完全由 MVVM 来统一管理。
+
+  - MVVM与MVC的最大区别就是：它实现了View和Model的自动同步，也就是当Model的数据改变时，我们不用再自己手动操作Dom元素，来改变View的显示，而是改变数据后该数据对应View层显示会自动改变。
 

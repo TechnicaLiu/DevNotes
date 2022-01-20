@@ -2,7 +2,35 @@
 
 > koa采用的是洋葱圈模型，先执行完next()前面的语句，匹配完路由后，再返回执行next后面的语句
 
-代码示例：
+### 特点
+
+- 避免异步嵌套 
+
+- **Koa 异步处理Async...Await 和Promise使用**
+
+- 洋葱模型  中间件  合理拆分业务 
+
+  ![image-20220120214707352](https://gitee.com/youngstory/images/raw/master/img/202201202147449.png)
+
+- 通过app.use  添加一个中间件 ， 一个中间件就是一个函数 
+
+- 内层中间件能否执行取决于外层中间件的 next 函数 是否调用 
+
+- **调用next  函数 返回的是 promise 对象**
+
+### 处理http请求
+
+- ctx 即 request 和 response 的集合 ， 用来处理接收和返回数据  
+
+- ctx.query  获取get 请求得参数集合   gei静态传值 
+
+- ctx.request.path可以获取用户请求的路径 
+
+- ctx.request.body 获取post 请求的参数集合 
+
+- ctx.response.body  设置响应数据 
+
+### 代码示例
 
 ```js
 var Koa = require('koa');

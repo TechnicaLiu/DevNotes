@@ -845,7 +845,7 @@ console.log(str2.replace(reg,""));
 
 **不同点**： 
 
-* for in 是遍历属性的，而for..of 是用来遍历具有 iterator 接口的数据结构如set  map  arguments 
+* for in 是遍历属性的，而**for..of 是用来遍历具有 iterator 接口的数据结构如set  map  arguments** 
 
   ```js
   // for of 遍历对象   Object.keys
@@ -868,8 +868,6 @@ console.log(str2.replace(reg,""));
   console.log(len); // 3 
   
   ```
-
-  
 
 * 在遍历数组时，for in 会输出 索引值，而for..of 会输出数组每一位的值 
 

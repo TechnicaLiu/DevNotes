@@ -837,6 +837,57 @@ finally{
 
 ## 对象
 
+### 属性的简洁表示法
+
+ES6允许直接写入变量和函数作为对象的属性和方法。(可以只写属性名，不写属性值，属性值就等于属性名所代表的变量)
+
+```js
+ 	let foo = 'hello';
+  let fun = function () {
+    console.log('world');
+  }
+    let obj = {
+      foo,
+      fun,
+      fun2(){
+       	return 'Abin'
+      }
+    }
+    console.log(obj);
+// foo: "hello"
+// fun: ƒ ()
+```
+
+CommonJs模块输出变量就采用这种写法
+
+```js
+// 01 文件 
+function getItem(key) {
+  return key in box ? box[key] : null;
+}
+
+function setItem(key, value) {
+  box[key] = value
+}
+
+function clearObj() {
+  box = {}
+}
+module.exports = {
+  getItem,
+  setItem,
+  clearObj
+}
+
+// 02 文件 
+let {
+  getItem,
+  setItem,
+  clearObj
+} = require('./module01');
+let result = getItem('myname');
+```
+
 ### 创建对象
 
 Object.create( )  括号中用来存放 创建新对象的原型 
@@ -855,7 +906,7 @@ var o1 = Object.create({x:1,y:2})  //o1继承了属性x和y
 
 **区别：**
 
-对于点.来说，右侧必须是一个以属性名称命名的简单标识符。对于 方括号来说，方括号内必须是一个计算结果为字符串的表达式，这个字符串就是属性的名字。
+对于点.来说，右侧必须是一个以属性名称命名的简单标识符。对于 方括号来说，**方括号内必须是一个计算结果为字符串的表达式**，这个字符串就是属性的名字。
 
 方法： Object.keys( ) 
 
@@ -970,9 +1021,26 @@ delete book.author // book不再有属性 author
    // Math 和 Error 对象没有 valueOf()
    ```
 
-5. Object.assign(target, source)
+5. Object.is( )
 
-   将所有可枚举属性的值从一个或多个源对象分配到目标对象。返回目标对象。
+   **用来比较两个值是否相等**。与 === 运算符基本一致，但是不同点是：
+
+   * +0 和 -0  不相等
+   * NaN 和 NaN 相等
+
+   ```js
+   +0 === -0 // true 
+   NaN === NaN // false 
+   
+   Object.is(+0,-0) // false 
+   Object.is(NaN,NaN)  // false 
+   ```
+
+   
+
+6. Object.assign(target, source)  
+
+   将**所有可枚举属性的值从一个或多个源对象分配到目标对象**。返回目标对象。
 
    如果目标对象中的属性具有相同的键，则属性将被源对象中的属性覆盖。
 
@@ -989,7 +1057,99 @@ delete book.author // book不再有属性 author
        console.log(obj2);    // {b: 2, d: 4, a: 1}
    ```
 
-   
+   注意：**Object.assign方法实行的是浅复制，而不是深复制**，也就是说 如果源对象某个属性的值是对象，那么目标对象复制得到的是这个对象的引用。这个对象的任何变化都会影响目标对象
+
+   ```js
+   var obj = {
+     a: {
+       b: 1
+     }
+   };
+   obj.a.b = 2;
+   var obj2 = Object.assign({}, obj);
+   console.log(obj2) // { a: { b: 1 } }
+   ```
+
+### 属性的可枚举性
+
+对象的每一个属性都具有一个描述对象，用于控制该属性的行为。
+
+`getOwnPropertyDescriptor`  方法可以获取该属性的描述对象。
+
+```js
+let obj = {
+      name: 'Bin',
+      age: 18
+}
+ Object.getOwnPropertyDescriptor(obj, 'name');
+/*
+configurable: true
+enumerable: true   该属性称为 “可枚举型 ”
+value: "Bin"
+writable: true
+*/
+```
+
+在ES6中，某些操作会忽略 enumerable 为false 的属性 
+
+1. for .. in 循环：只遍历**对象自身的和继承**的可枚举属性
+2. Object.keys( ) : 返回**对象自身**的所有可枚举属性的键名
+3. JSON。stringify( ):只串行化**对象自身**的可枚举属性
+4. Object.assign( ): 只复制**对象自身**的可枚举属性 
+
+### 属性的遍历
+
+共有5中方法可以遍历对象的属性
+
+1. for...in
+
+   遍历对象自身的和继承的可枚举属性（不含Symbol属性）
+
+2. Object.keys(obj)
+
+   Object.keys返回一个**数组**，包括对象自身的（不含继承的）所有可枚举属性（不含Symbol属性）
+
+3. Objecy.**getOwnPropertyNames**(obj)
+
+   返回一个数组，包含对象自身的所有属性（不含Symbol属性，但是包括不可枚举属性）
+
+4. Objecy.**getOwnPropertySymbols(obj)**
+
+   返回一个数组，包含对象自身的所有Symbol属性
+
+5. Reflect.ownKeys(obj) 
+
+   返回一个数组，包含对象自身的所有属性，不管属性名是Symbol还是字符串，也不管是否可枚举。
+
+以上5种方法遍历对象的属性时都遵守同样的属性遍历次序规则。
+
+* 首先遍历所有属性名为**数值**的属性，按照**数字**排序
+* 其次遍历所有属性名为**字符串**的属性，按照**生成时间**排序。
+* 最后遍历所有属性名为**Symbol**值得属性，按照**生成时间顺序**
+
+### Null 传导运算符
+
+在读取某个对象内部得某个属性，往往需要判断这个对象是否存在。
+
+常规做法是 ：
+
+```js
+const firstName = (messsage && message,body && message.bady.firstName)||'default'
+```
+
+这样写起来很麻烦，所以 引入了Null 传导 运算符  ?.
+
+```js
+const firstName = message?.body?.firstName||'default';
+// 上面 两个 ?.运算符，只要其中一个返回 null 或 undefined .就不再继续运算，而是返回undefined .
+```
+
+"Null 传导运算符" 共有4种用法
+
+1. obj ?. prop  读取对象属性
+2. obj ?. [expr] : 同上
+3. func ?. (...args) 函数或对象方法的调用
+4. new C ?. (...args) 构造函数的调用 
 
 ## 数组
 
@@ -1046,9 +1206,21 @@ console.log(res); //(5) [5, 2, 3, 4, 5]
 
 > entries()  keys() values() 都是用来遍历数组的。entries() 是对键值对的遍历，keys()是对键的遍历，values( ) 是对值的遍历。
 
-
-
-
+```js
+  let arr = ['orange', 'apple', 'banana'];
+    for (let index of arr.entries()) {
+      console.log(index);
+    }
+    /*
+    (2) [0, 'orange']
+    (2) [1, 'apple']
+    (2) [2, 'banana']
+    
+    */
+    for (let index of arr.values()) {
+      console.log(index); // 'orange' 'apple' 'banana'
+    }
+```
 
 ### delete
 

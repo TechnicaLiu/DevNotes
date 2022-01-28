@@ -1543,7 +1543,9 @@ bar.name  // baz
 2. fulfilled  解决 也叫 resolved 
 3. rejected  拒绝  
 
-Promise可以从 pending 转为 fulfilled ，或者从 pending 转为 rejected ，无论转为哪种状态都是不可逆的。期约 的状态不能被外部JS代码修改，即 期约与外部的同步代码隔离。
+Promise可以从 pending 转为 fulfilled ，或者从 pending 转为 rejected ，无论转为哪种状态都是不可逆的。**期约 的状态不能被外部JS代码修改**，即 期约与外部的同步代码隔离。
+
+**只有异步操作的结果，可以决定当前是哪一种状态，**任何其他操作都无法改变这个状态。
 
 Promise.resolve( )  实例化一个解决的期约。
 
@@ -1574,8 +1576,6 @@ setTimeout(console.log,0,p)  // Promise<reject> : 3
    该方法接收最多两个参数： onResolved处理程序和onRejected处理程序。在期约分别进入“兑现”和"拒绝"状态时执行。
 
    ```js
-   p.then(onFulfilled[, onRejected]);
-   
    var p1 = new Promise((resolve, reject) => {
      resolve('成功！');
      // or
@@ -1587,11 +1587,8 @@ setTimeout(console.log,0,p)  // Promise<reject> : 3
    }, reason => {
      console.error(reason); // 出错了！
    });
-   
-   
-   
    ```
-
+   
 2. Promise.prototype.catch()
 
    用于给期约添加拒绝处理程序。这个方法只接受一个参数 ： onReejected处理程序 

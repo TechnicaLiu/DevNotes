@@ -366,7 +366,7 @@ function postJson(url, data, callback) {
 
 ### ajax axios 和  fetch 的区别 ？
 
-axios 本质上对  原生ajax进行  promise 的封装，符合最新的ES规范通过 .then 来返回成功的结果，.catch来接收失败的结果 。具有以下特征：  提供了一些并发请求的接口、拦截请求和响应、自动转换JSON数据 
+axios 本质上对  原生ajax进行  promise 的封装，符合最新的ES规范通过 .then 来返回成功的结果，.catch来接收失败的结果 。具有以下特征：  提供了一些并发请求的接口、拦截请求和响应、**自动转换JSON数据**  并且会自动设置默认请求头: Content-Type:application/json; charset=utf8;
 
 ```js
 axios({
@@ -381,6 +381,8 @@ axios({
 	console.log(error);
 });
 ```
+
+而用jquery的ajax发送post请求，本质是模仿表单请求，数据会以**查询字符串格式**发送到后端（name=zs&age=18,类似这样的数据格式叫做查询字符串格式）默认请求头为：Content-Type:application/x-www-formdata-urlencoded;
 
 fetch  同样使用了ES6中的promise 对象。fetch不是ajax的进一步封装，而是原生js，没有使用 XMLHTTPRrequest对象  。
 

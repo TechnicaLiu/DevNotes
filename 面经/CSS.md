@@ -51,7 +51,7 @@
           justify-content: center;
           align-items: center;
       }
-      .box1{
+    .box1{
   		width:50px;
   		height:50px;
   		border:1px red solid;
@@ -109,9 +109,20 @@ flex是弹性布局（轴线布局），只能指定”项目“针对轴线的�
 
 ## link和 @import 的区别
 
-* link是html方式， @import 是 css方式
+* link是html方式， @import 是 css方式 
+
+  ```css
+  <style>
+  @import "../css/style.css";
+  @import "//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+  </style>
+  ```
+
 * link优先级要比 @import 高
+
 * @import  必须在样式规则 之前， 可以在css文件中引用其他文件 
+
+* 在vue组件中也可以在 script标签中 引入 css
 
 ## 清除浮动的几种方式
 
@@ -161,7 +172,7 @@ flex是弹性布局（轴线布局），只能指定”项目“针对轴线的�
 
 ## 重排和重绘 
 
-部分渲染树（或者整个渲染树）需要重新分析并且节点尺寸需要重新计算。这被称为重排。
+部分渲染树（或者整个渲染树）需要**重新分析并且节点尺寸需要重新计算**。这被称为重排。
 由于节点的几何属性发生改变或者由于样式发生改变，例如改变元素背景色时，屏幕上的部分内容需要更新。这样的更新被称为重绘。
 
 ## 什么情况会触发重排和重绘？

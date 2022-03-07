@@ -2135,6 +2135,22 @@ let viewportHeigth = window.innerHeight;
 window.scrollTo(0, documentHeight - viewportHeigth)
 ```
 
+# 客户端存储
+
+## 客户端储存方案
+
+服务端存储
+
+* 服务端文件储存
+* 内存
+* 数据库：mysql mongondb Oracle等等
+
+客户端存储
+
+* 浏览器
+
+## Cookie
+
 # ES2020
 
 ## ?? 双问号
@@ -2293,4 +2309,168 @@ axios.get(`https://...../payorderNumber=${_self.orderNumber}&openId=${_self.$use
 
 ![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a81ce40c674e42~tplv-t2oaga2asx-watermark.awebp)
 
+# 服务端部署
 
+## 1. Vue前端项目打包
+
+1. 在config目录下的pro.env.js 文件当中配置我们的后端服务器的IP地址和端口号 
+
+   ```js
+   VUE_HOST = '10.100.1.198:9002'
+   SYSTEM_NAME = '考试管理系统'
+   PUBLISH_ADDRESS = 'http://192.162.130.33:8086'
+   
+   module.exports = {
+     NODE_ENV: '"production"',
+     VUE_HOST: '"' + VUE_HOST + '"',
+     FILE_SERVER: '"http://192.162.130.34"',
+     SYSTEM_NAME: '"' + SYSTEM_NAME + '"',
+     PUBLISH_ADDRESS: '"' + PUBLISH_ADDRESS + '"',
+   }
+   ```
+
+2. 在 config目录下的Index.js文件房中要改 assetPublicPath:'./' 静态文件地址
+
+   ```js
+     build: {
+       // Template for index.html
+       index: path.resolve(__dirname, '../dist/index.html'),
+   
+       // Paths
+       assetsRoot: path.resolve(__dirname, '../dist'),
+       assetsSubDirectory: 'static',
+       assetsPublicPath: './',
+   
+       /**
+        * Source Maps
+        */
+   
+       productionSourceMap: true,
+       devtool: '#source-map',
+       productionGzip: false,
+       productionGzipExtensions: ['js', 'css'],
+       bundleAnalyzerReport: process.env.npm_config_report
+     }
+   ```
+
+3. 在终端 输入 npm run build 打包生成 dist 文件，然后将dist文件 放到服务器 路径要与nginx配置路径一致。
+
+## Linux服务器上安装nginx 并且进行相关配置
+
+### 安装必要软件 
+
+* xshell 连接终端 (可以使用户在window下直接访问远程不同系统的服务器，即可远程控制终端服务器)
+* xftp传输文件 （向远程服务器传输文件）
+
+### 安装 nginx
+
+下载-解压-编译安装
+
+```js
+// 下载 
+wget http://nginx.org/download/nginx-1.13.6.tar.gz
+
+// 解压nginx安装包 
+tar -zvxf nginx-1.13.6.tar.gz
+cd nginx-1.13.6
+
+// make 编译安装 nginx 
+./configure --with-http_ssl_module --with-http_gzip_static_module
+make
+make install
+
+// 启动程序
+cd /usr/local/nginx/sbin/
+./nginx
+
+// 查看运行状态
+ps aux | grep nginx
+
+```
+
+### nginx前端项目代理地址配置
+
+（*Vue项目设置了本地代理，部署到Nginx上需要使用反向代理解决生产环境跨域问题*）
+
+**vue项目代理设置**
+
+修改本地代理地址配置文件  config/index.js
+
+```js
+ proxyTable: {
+      '/exam': {
+        target: 'http://192.162.130.172:8004/exam',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/exam': ''
+        }
+      }
+    },
+```
+
+**nginx代理设置**
+
+在/usr/local/nginx/conf目录下配置nginx.conf文件修改内容
+
+1. 修改root,（root为项目打包后文件的存放路径）
+
+   ```js
+   location / {
+     root   /home/www/dist;
+     index  index.html index.htm;
+   }
+   ```
+
+2. 设置nginx反向代理（解决生产环境跨域问题）
+
+   ```js
+     location /api/ {
+       proxy_pass https://api.weixin.qq.com/;
+       add_header Content-Type "text/plain;charset=utf-8";
+       add_header 'Access-Control-Allow-Origin' '*';
+       add_header 'Access-Control-Allow-Credentials' 'true';
+       add_header 'Access-Control-Allow-Methods' 'GET, POST';
+     }
+   
+   ```
+
+## conf配置文件的启动
+
+启动项目指定配置文件
+
+```hs
+cd /usr/local/nginx/sbin/ ./nginx -c conf/nginx_hwfm.conf
+```
+
+查看启动进程
+
+```js
+ps -ef|grep nginx_hwfm
+```
+
+杀掉进程
+
+```js
+kill -9 进程号
+```
+
+## nginx其他常用命令
+
+1. 启动nginx 
+
+   ```js
+   cd /usr/local/nginx/sbin/
+   ./nginx
+   ```
+
+2. 查看运行状态   `ps aux | grep nginx`
+
+3. 停止nginx    `./nginx –s stop`
+
+4. 检查配置文件是否正确  `./nginx –t`
+
+5. 查看nginx版本   `./nginx -v`
+
+6. 配置文件位置    `/usr/local/nginx/conf/nginx.conf`
+
+ 

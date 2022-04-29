@@ -9,6 +9,7 @@
 3. Vue复制内容到剪贴板 — **vue-clipboard2**
 4. 滑动验证码验证   **[vue-puzzle-vcode](https://gitee.com/beeworkshop/vue-puzzle-vcode)**
 5. vue 生成二维码   `vue-qr`
+6. 日期插件 [Day.js中文网 (fenxianglu.cn)](https://dayjs.fenxianglu.cn/)   
 
 ### Github上优秀的仓库😊
 
@@ -43,3 +44,7 @@
 5. [卖好车团队](https://github.com/maihaoche) -> 《卖好车期刊》
 6. [腾讯AlloyTeam](https://github.com/AlloyTeam) -> 《[Tencent AlloyTeam](http://alloyteam.github.io/)》
 
+### 开发常用网站
+
+1. [首页 - ECharts Demo集,echarts gallery社区,Make A Pie,分享你的可视化作品isqqw.com](https://www.isqqw.com/homepage)
+2. [PPChart - 让图表更简单](http://ppchart.com/#/)

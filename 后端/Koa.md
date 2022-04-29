@@ -131,24 +131,18 @@ get  : **动态传值    用 ctx.params** 来接收    前后端分离resetful �
 
 ## 关联表
 
-hasOne  一对一
+hasOne  A 有一个 B   /    hasMany  A 有很多 B   /   belongsTo A 属于 B
 
-hasMany 一对多
-
-```js
-category.hasMany(article,{foreignKey:{name:'catId',allowNull:false}})   
-```
-
-belongsTo  一对多
+举例： 
 
 ```js
-article.belongsTo(category,{foreignKey:{}}) // 默认 article表中会添加  categoryId字段 
-```
+有三张表  user_group用户分组表 、 user用户表、profile用户信息表
 
-BelongsToMany 多对多 
-
-```
-收藏表：会员，商品
+我们可以得出以下结论:
+1. 一个用户分组可以有多个用户   user_group hasMany user;
+2.一个用户属于一个用户组   user belongsTo user_group;
+3.每个用户都应该有唯一的用户信息  user  hasOne profile;
+4.一条用户信息 属于 一个用户  profile belongsTo user
 ```
 
 ## 使用koa-multer 上传文件 
@@ -222,7 +216,7 @@ app.use(router.routes()).use(router.allowedMethods())
 app.listen(3000)
 ```
 
-
+使用
 
 
 

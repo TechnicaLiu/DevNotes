@@ -159,3 +159,63 @@
 
 # Sequalize
 
+## 查询数据库 
+
+普通查询
+
+```js
+ static async getUserList(ctx) {
+    const userData = await userModel.findAll();
+    //console.log(userData)
+    ctx.body = util.success(userData);
+  }
+```
+
+联表查询
+
+```js
+static async getProductCategoryRank(ctx){
+    const map = {
+      is_on: 1,
+    };
+    let include = [{ model: categoryModel, attributes: ["name"] }];
+    const res = await goodsModel.findAll({
+      where: map,
+      include,
+      attributes: [
+        "category.name",
+        [Sequelize.fn("SUM", Sequelize.col("sales")), "sum"],
+      ],
+      group: "categoryId",
+      raw: true,
+    });
+```
+
+模糊查询
+
+```js
+static async getCateList(ctx) {
+    const { name, state } = ctx.request.query;
+    const params = {};
+    if (name) params.name = {
+      [Op.like]: "%" + name + "%"
+    }
+    if (state) params.state = state;
+    let rootList = await categoryModel.findAll({
+      where: params,
+    });
+    console.log(rootList); // 返回orm对象(多)
+    console.log(rootList.dataValues); //  dataValues是真的对象信息
+    const permissionList = util.getCateMenu(rootList, 0, []);  // category表递归级联菜单（基础重要重要）
+    ctx.body = util.success(permissionList);
+  }
+```
+
+
+
+## 删除数据
+
+```js
+await skucateModel.destroy({ where: { goodId: id } });
+```
+

@@ -731,11 +731,7 @@ Promise是一个对象，保存着未来将要结束的事件，解决回调地�
 ```js
 //浅拷贝 
 1. Object.assign(target,source)
-2. es6对象扩展运算符。 
- var newObj = {
-      ...obj
-    }
-3.递归迭代 
+2.递归迭代 
 function simpleClone(obj) {
          var newObj = {};
          for (i in obj) {
@@ -764,8 +760,11 @@ function deepClone(obj) {
     }
     var deepCopy = JSON.parse(JSON.stringify(obj));
     console.log(deepCopy === obj);// false 
-
-
+// 深拷贝3
+es6对象扩展运算符。 
+ var newObj = {
+      ...obj
+    }
 ```
 
 ## 数组扁平化
@@ -1276,7 +1275,7 @@ var iterableObj = {
 
 ## 箭头函数特点
 
-* 函数体内的 `this`对象，就是定义时所在的对象。
+* 函数体内的 `this`对象，就是定义时所在的对象（外层函数的this）。
 * 不可以当作构造函数，也就是说，不可以使用 `new` 命令，否则会抛出一个错误。
 * 没有原型
 * 不可以使用 `arguments` 对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替 。

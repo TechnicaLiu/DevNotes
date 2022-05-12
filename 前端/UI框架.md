@@ -91,3 +91,21 @@
 }
 ```
 
+## 复选框
+
+```scss
+.el-checkbox__input.is-checked .el-checkbox__inner,.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+  background-color: $customThemeColor !important;
+  border: 1px solid $customThemeColor !important;
+}
+.el-checkbox__inner:hover {
+  border-color: $customThemeColor;
+}
+.el-checkbox__input.is-checked + .el-checkbox__label {
+  color: $customThemeColor;
+}
+.el-checkbox__input.is-focus .el-checkbox__inner {
+  border-color: $customThemeColor!important;
+}
+```
+

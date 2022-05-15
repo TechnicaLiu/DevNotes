@@ -179,9 +179,20 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 ![image-20220111144015004](https://gitee.com/youngstory/images/raw/master/img/202201111440141.png)
 
+## Canvas
 
+定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。
 
+- 矩形![img](https://gitee.com/youngstory/images/raw/master/img/7e4eaf7c-aaa5-4907-80e5-ef15002862aa-2519832.jpg)
 
+- 圆形 
+
+  - ctx.beginPath( ) ;  ctx.arc(95,50,40,0,2*Math.PI);
+
+  - arc( 圆的中心的x坐标，园的中心的坐标，圆的半径，起始角，结束角，true/false 顺时针逆时针)
+
+- 直线
+  - move to (  )  起始点   line to ( 终点 )
 
 # CSS
 

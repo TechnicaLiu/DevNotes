@@ -107,7 +107,7 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 效果：
 
-<img src="https://gitee.com/youngstory/images/raw/master/img/202201111409769.png" alt="image-20220111140925478" style="zoom: 50%;" />
+<img src="https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201111409769.png" alt="image-20220111140925478" style="zoom: 50%;" />
 
 代码解析：
 
@@ -133,7 +133,7 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 摆脱了以往 通切各种倍数的图来适配高清设备的束缚，因为svg图像放大多少倍质量都不会变
 
-<img src="https://gitee.com/youngstory/images/raw/master/img/202201111425222.png" alt="image-20220111142549125" style="zoom:80%;" />
+<img src="https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201111425222.png" alt="image-20220111142549125" style="zoom:80%;" />
 
 同时我们可以通过改变他的属性来轻松的给他更换颜色 。
 
@@ -177,13 +177,13 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 效果：
 
-![image-20220111144015004](https://gitee.com/youngstory/images/raw/master/img/202201111440141.png)
+![image-20220111144015004](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201111440141.png)
 
 ## Canvas
 
 定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。
 
-- 矩形![img](https://gitee.com/youngstory/images/raw/master/img/7e4eaf7c-aaa5-4907-80e5-ef15002862aa-2519832.jpg)
+- 矩形![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/7e4eaf7c-aaa5-4907-80e5-ef15002862aa-2519832.jpg)
 
 - 圆形 
 
@@ -193,6 +193,45 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 - 直线
   - move to (  )  起始点   line to ( 终点 )
+
+## 拖动元素
+
+示例：
+
+```html
+<body>
+    <!-- 链接和图像默认是可拖动的。 -->
+    <p>请把 Logo 拖放到正方形中：</p>
+    <div id="box1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <img
+      id="img1"
+      src="./personalLogo.jpg"
+      draggable="true"
+      ondragstart="drag(event)"
+      alt=""
+    />
+  </body>
+  <script>
+    // 拖起
+    function drag(e) {
+      e.dataTransfer.setData("Text", e.target.id); // 设置被拖动数据类型和值
+    }
+
+    function drop(e) {
+      e.preventDefault(); // 默认无法将元素拖动到其他元素中，需要阻止默认行为
+      var data = e.dataTransfer.getData("Text"); // 规定在何处放置 元素 
+      e.target.appendChild(document.getElementById(data));
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();  
+    }
+  </script>
+```
+
+1. 将要拖动的元素 设置 可拖动属性 `draggable="true"`
+2. 将要拖动的元素绑定开始拖动函数   `ondragstart="drag(event)"`
+3. 在 放置的目标位置 绑定  `ondragover`  和 `ondrop`
 
 # CSS
 
@@ -1920,7 +1959,7 @@ prototype : 原型  =》   函数的一个属性
 
 **对象的隐式原型的值为其对应构造函数的显示原型的值** 
 
-<img src="https://gitee.com/youngstory/images/raw/master/img/202110252013455.png" alt="image-20211025201341306"  />
+<img src="https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110252013455.png" alt="image-20211025201341306"  />
 
 ```js
  function Animals() {
@@ -2159,7 +2198,7 @@ window.close( )
 
 **使用getBoundingClientRect**()  可以判定一个元素的尺寸和位置 。 
 
-![image-20211228104157444](https://gitee.com/youngstory/images/raw/master/img/202112281041534.png)
+![image-20211228104157444](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202112281041534.png)
 
 其中： left 和 top 表示元素的左上角的X和Y坐标，right和bottom 表示元素的右下角的X和Y坐标 
 
@@ -2229,7 +2268,7 @@ const foo = null ?? 'myschool'
 
   -  Controller（控制器） - 控制器作用于模型和视图上。它控制数据流向模型对象，并在数据变化时更新视图。它使视图与模型分离开。
 
-  - 典型的框架就是 java领域的 Spring  Structs   Hibernate ![img](https://gitee.com/youngstory/images/raw/master/img/48a3a2b8-bef1-472c-bfab-738b6346d62f-2519832.jpg)![img](https://gitee.com/youngstory/images/raw/master/img/29a2c0ae-6b49-4c8c-ba2b-407d012c7fa6-2519832.jpg)
+  - 典型的框架就是 java领域的 Spring  Structs   Hibernate ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/48a3a2b8-bef1-472c-bfab-738b6346d62f-2519832.jpg)![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/29a2c0ae-6b49-4c8c-ba2b-407d012c7fa6-2519832.jpg)
 
 - MVVM
 
@@ -2275,7 +2314,7 @@ let data = {
 
 
 
-![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a817b162a9a90b~tplv-t2oaga2asx-watermark.awebp)
+![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a817b162a9a90b~tplv-t2oaga2asx-watermark.awebp)
 
 3. 通过FormData表单形式传递参数
 
@@ -2298,7 +2337,7 @@ let data = new FormData()
 
 ```
 
-![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a819bdec22606a~tplv-t2oaga2asx-watermark.awebp)
+![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a819bdec22606a~tplv-t2oaga2asx-watermark.awebp)
 
 **示例二：通过键值对的表单形式传递数据**
 
@@ -2314,7 +2353,7 @@ axios.post("/notice",formData)
 
 
 
-![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a81b7b98664398~tplv-t2oaga2asx-watermark.awebp)
+![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a81b7b98664398~tplv-t2oaga2asx-watermark.awebp)
 
 ## get请求
 
@@ -2330,7 +2369,7 @@ axios.get(`https://...../payorderNumber=${_self.orderNumber}&openId=${_self.$use
 
 
 
-![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a81c834cb9e131~tplv-t2oaga2asx-watermark.awebp)
+![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a81c834cb9e131~tplv-t2oaga2asx-watermark.awebp)
 
 2. 通过 params对象传递数据（推荐）
    **params参数必写 , 如果没有参数传{}也可以**
@@ -2346,7 +2385,7 @@ axios.get(`https://...../payorderNumber=${_self.orderNumber}&openId=${_self.$use
     })
 ```
 
-![postman图片示例](https://gitee.com/youngstory/images/raw/master/img/16a81ce40c674e42~tplv-t2oaga2asx-watermark.awebp)
+![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a81ce40c674e42~tplv-t2oaga2asx-watermark.awebp)
 
 # 服务端部署
 

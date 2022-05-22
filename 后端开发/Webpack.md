@@ -2,181 +2,168 @@
 
 ## 1.安装
 
-~~~js
+````js
 ```
 npm init -y  //创建一个空项目
 npm install --save-dev webpack
 npm install --save-dev webpack-cli
-```
-~~~
+```;
+````
 
 ## 2.目录结构
 
- - 按照我们之前了解vue项目的创建目录
+- 按照我们之前了解 vue 项目的创建目录
 
-    ```js
-    project
-        - src
-            - index.js
-        - package.json
-    ```
+  ```js
+  project - src - index.js - package.json;
+  ```
 
- - index.js文件内容
+- index.js 文件内容
 
-    ```js
-    const add = function(){
-        return 1+2
-    }
-    ```
+  ```js
+  const add = function () {
+    return 1 + 2;
+  };
+  ```
 
-
-~~~js
+````js
 console.log(add())
 ```
-~~~
+````
 
- - 在根目录创建webpack.config.js文件
+- 在根目录创建 webpack.config.js 文件
 
-    ```js
-    project
-        - src
-        - package.json
-        - webpack.config.js
-    ```
+  ```js
+  project - src - package.json - webpack.config.js;
+  ```
 
- - webpack的基础配置
+- webpack 的基础配置
 
-    - 使用commonjs语法,将webpack配置文件内容暴露出去
-
-        ```js
-        module.exports = {}
-        ```
-    - entry
-
-        js的入口文件
-
-        ```js
-        module.exports = {
-            entry:"./src/index.js",
-        }
-        ```
-
-    - output 
-
-        js打包之后的信息内容
-
-        ```js
-        module.exports = {
-            output:{
-                filename:"js/mod.js",
-                //resolve是nodejs标准库的path库的方法，用来处理路径的。__dirname指的是当前的路径，
-                path:resolve(__dirname,'build'),
-                //publicPath会自动在输出的静态资源的路径前加上我们写的值，
-                //而加上publicPath:'./'的原因就是让我们html中img标签的路径正确，
-                //因为输出的图片是在build文件夹中，但不会创建新的文件夹
-                publicPath:"./"
-            }
-        }
-        ```
-    
-    - 打包
-
-        - 直接使用webpack命令
-
-            ```js
-            npx webpack
-            ```
-        
-        - 通过修改package.json文件进行打包
-
-            - 修改package.json文件
-
-                ```js
-                 "scripts": {
-                    "build": "npx webpack",
-                },
-                ```
-            - 打包
-
-                ```js
-                npm run build
-                ```
-
-    - 测试打包后的结果
-
-        ```js
-        node build/js/mod.js
-        ```
-    
-## 3.把html文件打包
-
- - 增加index.html文件
+  - 使用 commonjs 语法,将 webpack 配置文件内容暴露出去
 
     ```js
-    project
-        - src
-        - index.htmls
-        - package.json
-        - webpack.config.js
+    module.exports = {};
     ```
 
- - index.html文件内容
+  - entry
+
+    js 的入口文件
 
     ```js
-    <html>
-        <head>
-            <meta charset="utf-8">
-            <mata name="viewport" content="width=device-width,initial-scale=1.0">
-            <title>webpack-demo</title>
-        </head>
-        <body>
-            <h1>webpack demo </h1>
-        </body>
-    </html>
+    module.exports = {
+      entry: "./src/index.js",
+    };
     ```
 
- - HtmlWebpackPlugin插件
-   
-    - 安装该插件
+  - output
+
+    js 打包之后的信息内容
+
+    ```js
+    module.exports = {
+      output: {
+        filename: "js/mod.js",
+        //resolve是nodejs标准库的path库的方法，用来处理路径的。__dirname指的是当前的路径，
+        path: resolve(__dirname, "build"),
+        //publicPath会自动在输出的静态资源的路径前加上我们写的值，
+        //而加上publicPath:'./'的原因就是让我们html中img标签的路径正确，
+        //因为输出的图片是在build文件夹中，但不会创建新的文件夹
+        publicPath: "./",
+      },
+    };
+    ```
+
+  - 打包
+
+    - 直接使用 webpack 命令
+
+      ```js
+      npx webpack
+      ```
+
+    - 通过修改 package.json 文件进行打包
+
+      - 修改 package.json 文件
 
         ```js
-        npm i -D html-webpack-plugin
+         "scripts": {
+            "build": "npx webpack",
+        },
         ```
-    - 修改webpack配置文件
+
+      - 打包
 
         ```js
-        const HtmlWebpackPlugin = require("html-webpack-plugin");        //把html文件打包
-        module.exports = {
-            entry:...,
-            output:...,
-            plugins:[
-                new HtmlWebpackPlugin({
-                    template:"./index.html",
-                    minify:{
-                        collapseWhitespace:true, //移出空格
-                        removeComments:true, //移出注释
-                    }
-                }),
-            ],
-        }
-
+        npm run build
         ```
 
-## 4.css样式的loader配置
+  - 测试打包后的结果
 
-~~~js
-- 安装
+    ```js
+    node build/js/mod.js
+    ```
+
+## 3.把 html 文件打包
+
+- 增加 index.html 文件
+
+  ```js
+  project - src - index.htmls - package.json - webpack.config.js;
+  ```
+
+- index.html 文件内容
+
+  ```js
+  <html>
+      <head>
+          <meta charset="utf-8">
+          <mata name="viewport" content="width=device-width,initial-scale=1.0">
+          <title>webpack-demo</title>
+      </head>
+      <body>
+          <h1>webpack demo </h1>
+      </body>
+  </html>
+  ```
+
+- HtmlWebpackPlugin 插件
+
+  - 安装该插件
+
+    ```js
+    npm i -D html-webpack-plugin
+    ```
+
+  - 修改 webpack 配置文件
+
+    ```js
+    const HtmlWebpackPlugin = require("html-webpack-plugin");        //把html文件打包
+    module.exports = {
+        entry:...,
+        output:...,
+        plugins:[
+            new HtmlWebpackPlugin({
+                template:"./index.html",
+                minify:{
+                    collapseWhitespace:true, //移出空格
+                    removeComments:true, //移出注释
+                }
+            }),
+        ],
+    }
 
     ```
+
+## 4.css 样式的 loader 配置
+
+````js
+-安装```
     //将css文件编程commonjs模块加载到js中，里面内容是样式字符串
     npm i -D css-loader
     //创建<style>标签，将js中样式插入进行，添加到head中
     npm i -D style-loader
-    ```
-
-- 修改配置文件
-
-    ```
+    ``` -
+  修改配置文件```
     //loader配置
     module:{
         rules:[
@@ -190,255 +177,230 @@ console.log(add())
             },
         ]
     },
-    ```
-- 创建css文件
-
-    - src/common/common.css
-
-    - common.css内容
-
-        ```
+    ``` -
+  创建css文件 -
+  src / common / common.css -
+  common.css内容```
         body {
             color:blue;
         }
-        ```
-    
-- 将common.css导入
+        ``` -
+  将common.css导入;
 
-    index.js
-
-    ```
+index.js```
     import "./assets/common.css" 
-    ```
+    ``` - 打包运行;
+````
+
+## 5.将 css 样式单独打包出独立文件
+
+- 安装
+
+  ```
+  npm i -D mini-css-extract-plugin
+  ```
+
+- 修改 webpack 配置文件
+
+  ```js
+  module:{
+          rules:[
+              {
+                  test:/\.css$/,
+                  //use数组中loader执行顺序，是从下到上依次执行
+                  use:[
+                      {
+                          loader:MiniCssExtractPlugin.loader, //取代style-loader，作用:提取js中的css成单独文件
+                          options:{
+                              publicPath:"../../",
+                          }
+                      },
+                      "css-loader", //将css文件编程commonjs模块加载到js中，里面内容是样式字符串
+                  ]
+              },
+          ]
+  },
+  plugins:[
+      new HtmlWebpackPlugin({
+          template:"./index.html",
+          minify:{
+              collapseWhitespace:true, //移出空格
+              removeComments:true, //移出注释
+          }
+      }),
+      new MiniCssExtractPlugin({
+          filename:'assets/css/build.[contenthash:10].css',
+      }),
+  ],
+  ```
 
 - 打包运行
-~~~
-
-## 5.将css样式单独打包出独立文件
-
- - 安装
-
-    ```
-    npm i -D mini-css-extract-plugin
-    ```
-
-- 修改webpack配置文件
-
-    ```js
-    module:{
-            rules:[
-                {
-                    test:/\.css$/,
-                    //use数组中loader执行顺序，是从下到上依次执行
-                    use:[
-                        {
-                            loader:MiniCssExtractPlugin.loader, //取代style-loader，作用:提取js中的css成单独文件
-                            options:{
-                                publicPath:"../../",
-                            }
-                        },
-                        "css-loader", //将css文件编程commonjs模块加载到js中，里面内容是样式字符串
-                    ]
-                },
-            ]
-    },
-    plugins:[
-        new HtmlWebpackPlugin({
-            template:"./index.html",
-            minify:{
-                collapseWhitespace:true, //移出空格
-                removeComments:true, //移出注释
-            }
-        }),
-        new MiniCssExtractPlugin({
-            filename:'assets/css/build.[contenthash:10].css',
-        }),
-    ],
-    ```
-
-- 打包运行
-
 
 ## 6.打包图片
 
- - 在assets文件夹下创建imgs文件夹，并放入测试图片
+- 在 assets 文件夹下创建 imgs 文件夹，并放入测试图片
+
+  ```
+  src
+   - assets
+      - imgs
+          - 1.jpg
+          - 2.png
+          - 3.jpg
+  ```
+
+- 修改 css 文件
+
+  ```html
+  #img1 { width: 100px; height:100px; background-image: url('../imgs/1.jpg') ;
+  background-repeat: no-repeat; background-size: cover; } #img2 { width: 100px;
+  height:100px; background-image: url('../imgs/2.png'); background-repeat:
+  no-repeat; background-size: cover; } #img3 { width: 100px; height:100px;
+  background-image: url('../imgs/3.jpg'); background-repeat: no-repeat;
+  background-size: cover; }
+  ```
+
+- 修改 index.html
+
+  ```
+  <div id="img1"></div>
+  <div id="img2"></div>
+  <div id="img3"></div>
+  ```
+
+- 下载 url-loader file-loader
+
+  ```
+  npm i -D url-loader file-loader
+  ```
+
+- 修改配置文件
+
+  ```js
+  module:{
+      rules:[
+          {
+              test:/\.(jpg|png)$/, //处理图片资源
+              //下载url-loader file-loader
+              loader:'url-loader',
+              //不配置options时 默认会把图片转为base64
+              options:{
+                  //图片大小小于8kb，就会被base64处理
+                  //有点：减少请求数量（减轻服务器压力）
+                  //缺点：图片体积会更大（文件请求速度变慢）
+                  limit:8 * 1024,
+                  //给图片重命名，【hash:10】取图片hash前10位，[ext]取文件原来扩展名
+                  name:'[hash:10].[ext]',
+                  outputPath:"assets/imgs",
+                  // esModule:false,
+              }
+          },
+      ]
+  },
+  ```
+
+- html 中 img 标签打包图片
+
+  - 修改 index.html
 
     ```
-    src
-     - assets
-        - imgs
-            - 1.jpg
-            - 2.png
-            - 3.jpg
+    <img style="width:100px;height:auto;" src="./src/assets/imgs/3.jpg" />
     ```
 
- - 修改css文件
-
-    ```html
-    #img1 {
-        width: 100px;
-        height:100px;
-        background-image: url('../imgs/1.jpg') ;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    #img2 {
-        width: 100px;
-        height:100px;
-        background-image: url('../imgs/2.png');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    #img3 {
-        width: 100px;
-        height:100px;
-        background-image: url('../imgs/3.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    ```
-
- - 修改index.html
+  - 安装 html-loader
 
     ```
-    <div id="img1"></div>
-    <div id="img2"></div>
-    <div id="img3"></div>
+    //处理html文件的img图片(负责引入img 从而被url-loader进行处理)
+    npm i -D html-loader
     ```
 
- - 下载url-loader file-loader
-
-    ```
-    npm i -D url-loader file-loader
-    ```
-
- - 修改配置文件
+  - 修改 webpack 配置文件
 
     ```js
+    //loader配置
     module:{
         rules:[
             {
-                test:/\.(jpg|png)$/, //处理图片资源
-                //下载url-loader file-loader
-                loader:'url-loader',
-                //不配置options时 默认会把图片转为base64
-                options:{
-                    //图片大小小于8kb，就会被base64处理
-                    //有点：减少请求数量（减轻服务器压力）
-                    //缺点：图片体积会更大（文件请求速度变慢）
-                    limit:8 * 1024,
-                    //给图片重命名，【hash:10】取图片hash前10位，[ext]取文件原来扩展名
-                    name:'[hash:10].[ext]',
-                    outputPath:"assets/imgs",
-                    // esModule:false,
-                }
+                test:/\.html$/,
+                //处理html文件的img图片(负责引入img 从而被url-loader进行处理)
+                loader:"html-loader"
             },
         ]
     },
     ```
 
- - html中img标签打包图片
+## 7.开发服务器 devServer:用来自动化编译，打开浏览器，自动刷新浏览器
 
-    - 修改index.html
+- 安装
 
-        ```
-        <img style="width:100px;height:auto;" src="./src/assets/imgs/3.jpg" />
-        ```
+  ```
+  npm i -D webpack-dev-server
+  ```
 
-    - 安装html-loader
+- 修改 webpack 配置
 
-        ```
-        //处理html文件的img图片(负责引入img 从而被url-loader进行处理)
-        npm i -D html-loader
-        ```
+  ```js
+  //开发服务器devServer:用来自动化编译，打开浏览器，自动刷新浏览器
+  //特点:只会在内存中编译打包，不会有任何输出
+  //注意!!!：如果你使用的webpack-cli的版本小于v4 启动devServer指令为:webpack-dev-server
+  //注意!!!：如果你使用的webpack-cli的版本是v4 那么启动devServer的命令是：webpack serve
+  //webpack-cli v4 comes with out of box support of @webpack-cli/serve which means you can use webpack serve to invoke the webpack-dev-server.
+  devServer:{
+      contentBase:resolve(__dirname,'build'),
+      compress:true,  //启动gzip压缩
+      port:3000,
+      // open:true, //自动开发默认浏览器
+      hot:true //开启hmr服务
+  },
+  ```
 
-    - 修改webpack配置文件
+- 修改 package.json 中 脚本命令信息
 
-        ```js
-        //loader配置
-        module:{
-            rules:[
-                {
-                    test:/\.html$/,
-                    //处理html文件的img图片(负责引入img 从而被url-loader进行处理)
-                    loader:"html-loader"
-                },
-            ]
-        },
-        ```
-    
-## 7.开发服务器devServer:用来自动化编译，打开浏览器，自动刷新浏览器
+  ```
+  "scripts": {
+      "start": "npx webpack serve",
+      "build": "npx webpack"
+  },
+  ```
 
- - 安装
+- 运行测试
 
-    ```
-    npm i -D webpack-dev-server
-    ```
-
- - 修改webpack配置
-
-    ```js
-    //开发服务器devServer:用来自动化编译，打开浏览器，自动刷新浏览器
-    //特点:只会在内存中编译打包，不会有任何输出
-    //注意!!!：如果你使用的webpack-cli的版本小于v4 启动devServer指令为:webpack-dev-server
-    //注意!!!：如果你使用的webpack-cli的版本是v4 那么启动devServer的命令是：webpack serve 
-    //webpack-cli v4 comes with out of box support of @webpack-cli/serve which means you can use webpack serve to invoke the webpack-dev-server.
-    devServer:{
-        contentBase:resolve(__dirname,'build'),
-        compress:true,  //启动gzip压缩
-        port:3000,
-        // open:true, //自动开发默认浏览器
-        hot:true //开启hmr服务
-    },
-    ```
-
- - 修改package.json中 脚本命令信息
-
-    ```
-    "scripts": {
-        "start": "npx webpack serve",
-        "build": "npx webpack"
-    },
-    ```
-
- - 运行测试
-
-    ```
-    npm start
-    ```
+  ```
+  npm start
+  ```
 
 ## 8.模式
 
- - 开发环境
+- 开发环境
 
-    ```
-    mode:"development",
-    ```
+  ```
+  mode:"development",
+  ```
 
- - 生产环境
+- 生产环境
 
-    ```
-    mode:"production",
-    ```
+  ```
+  mode:"production",
+  ```
 
 ## 9.clean-webpack-plugin
 
- - 每次先清除上一次部署文件再编译
+- 每次先清除上一次部署文件再编译
 
- - 安装
-  
-    ```
-    npm i -D clean-webpack-plugin
-    ```
+- 安装
 
- - 修改配置文件
+  ```
+  npm i -D clean-webpack-plugin
+  ```
 
-    ```
-    const { CleanWebpackPlugin } = require("clean-webpack-plugin");  //每次先清除上一次部署文件再编译
-    plugins:[
-        new CleanWebpackPlugin(),  //删除上一次build之后的文件
-    ],
-    ```
+- 修改配置文件
+
+  ```
+  const { CleanWebpackPlugin } = require("clean-webpack-plugin");  //每次先清除上一次部署文件再编译
+  plugins:[
+      new CleanWebpackPlugin(),  //删除上一次build之后的文件
+  ],
+  ```
 
 ## 10.source-map
 
@@ -446,7 +408,7 @@ console.log(add())
     devtool:'source-map'
     ```
 
-## 11.alias别名
+## 11.alias 别名
 
     ```
     resolve:{
@@ -456,34 +418,34 @@ console.log(add())
     },
     ```
 
-## 12.js文件分割打包
+## 12.js 文件分割打包
 
- - 修改配置文件
+- 修改配置文件
 
-    ```
-    optimization:{
-        //split 打包
-        splitChunks:{
-            chunks:'all',
-        }
-    },
-    ```
+  ```
+  optimization:{
+      //split 打包
+      splitChunks:{
+          chunks:'all',
+      }
+  },
+  ```
 
- - 添加test.js文件
+- 添加 test.js 文件
 
-    ```
-    export const fn = () => console.log(1000)
-    ```
+  ```
+  export const fn = () => console.log(1000)
+  ```
 
- - 在index.js文件引用
+- 在 index.js 文件引用
 
-    ```
-    import(/* webpackChunkName:'P' */"./test")
-        .then(({fn})=>fn())
-        .catch(e=>console.log(e))
-    ```
+  ```
+  import(/* webpackChunkName:'P' */"./test")
+      .then(({fn})=>fn())
+      .catch(e=>console.log(e))
+  ```
 
- - 运行测试
+- 运行测试
 
 # sourceMap
 
@@ -491,20 +453,20 @@ console.log(add())
 
 在前端的工作中主要是用来解决以下三个方面出现的 debug 问题：
 
-​	a. 代码压缩混淆后
-​	b. 利用 sass 、typeScript 等其他语言编译成 css 或 JS 后
-​	c. 利用 webpack 等打包工具进行多文件合并后
+​ a. 代码压缩混淆后
+​ b. 利用 sass 、typeScript 等其他语言编译成 css 或 JS 后
+​ c. 利用 webpack 等打包工具进行多文件合并后
 
-当我们进行调试代码的时候，经过压缩和处理的代码很难找到bug地方，所以我们需要借助sourceMap 来提供给我们 出错的位置信息。
+当我们进行调试代码的时候，经过压缩和处理的代码很难找到 bug 地方，所以我们需要借助 sourceMap 来提供给我们 出错的位置信息。
 
 ## 使用
 
 ### 环境设置
 
-google浏览器 打开 设置 - source 进行勾选 
+google 浏览器 打开 设置 - source 进行勾选
 
-<img src="https://gitee.com/youngstory/images/raw/master/img/202201061107899.png" style="zoom:67%;" />
+<img src="https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201061107899.png" style="zoom:67%;" />
 
-### .map文件生成
+### .map 文件生成
 
-![image-20220106112539152](https://gitee.com/youngstory/images/raw/master/img/202201061125242.png)
+![image-20220106112539152](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201061125242.png)

@@ -51,6 +51,17 @@
   background-color: $customThemeOpacityColor5 !important;
   color: #2B3245;
 }
+
+// 没有fixed的 hover样式
+.el-table tbody tr:hover>td {
+  background: $customThemeOpacityColor5 !important;
+  color: #2B3245;
+}
+// 有fixed的 hover样式
+.el-table__body .el-table__row.hover-row td{
+  background-color: $customThemeOpacityColor5 !important;
+}
+
 ```
 
 ### 下拉选择
@@ -201,4 +212,37 @@
    }
    ```
 
-   
+## 验证时间
+
+```js
+ checkStartTime(rule, value, callback) {
+      if (value) {
+        if (this.form.endTime && this.form.startFlag == 2) {
+          let result = ((new Date(this.form.endTime.replace(/-/g, "\/"))) > (new Date(value.replace(/-/g, "\/"))))
+          if (!result) {
+            callback(new Error('开始时间请勿晚于结束时间'));
+          } else {
+            callback()
+          }
+        } else {
+          callback()
+        }
+      }
+    },
+```
+
+### 时间比大小
+
+```js
+// 通过 getTime( ) 都转为毫秒数比较 
+function YMDHMS_daxiao(str1, str2) {
+    str1 = new Date(str1).getTime();
+    str2 = new Date(str2).getTime();
+    // 小于0则str1时间小，大于0则str1时间大
+    return str1 - str2
+};
+
+console.log(YMDHMS_daxiao('2021-9-1 8:00:00', '2021-12-3 15:00:00')); // -8060400000
+
+```
+

@@ -100,7 +100,7 @@
   - 年龄增加2岁          db.manager.update({},{ $inc:{age:2}} , false , true) 
     - 注意: 第一 false 不允许插入,第二true 允许多条的更新。
 
-  - 根据ID更新和添加         db.manager.save(    )：![img](https://gitee.com/youngstory/images/raw/master/img/202111131650821.png)
+  - 根据ID更新和添加         db.manager.save(    )：![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202111131650821.png)
     已有的 _id 是修改，不存在的_id 是添加
 
 - 删除   
@@ -143,19 +143,19 @@
 
 - 封装一个 BD 类 
 
-- 直接通过类调用方法  ![img](https://gitee.com/youngstory/images/raw/master/img/202111131650564.png)
+- 直接通过类调用方法  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202111131650564.png)
 
 ### ORM对象映射mongoose，
 
 在程序中设计表字段结构  提供一对一 ，一对多设计方法，并且同步到数据库中 （首选 ）
 
-- 安装引入mongoose  生成数据库 ![img](https://gitee.com/youngstory/images/raw/master/img/202111131651300.png)
+- 安装引入mongoose  生成数据库 ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202111131651300.png)
 
-- 设计表结构   Schema![img](https://gitee.com/youngstory/images/raw/master/img/202111131650229.png)
+- 设计表结构   Schema![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202111131650229.png)
 
 - 使用
 
-  ![img](https://gitee.com/youngstory/images/raw/master/img/202111131650035.png)
+  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202111131650035.png)
 
 # 2. Sequalize
 
@@ -211,11 +211,27 @@ static async getCateList(ctx) {
   }
 ```
 
+Sequlize 中 findone 数据库查询语句
+
+> `findOne` 方法获得它找到的第一个条目(它可以满足提供的可选查询参数)
+
+要用 where 查询
+
+```
+const project = await Project.findOne({ where: { title: 'My Title' } });
+```
+
+
+
+
+
 ## 2.2 删除数据
 
 ```js
 await skucateModel.destroy({ where: { goodId: id } });
 ```
+
+
 
 # 3. MySQL
 
@@ -274,7 +290,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
 - 基本数据类型
 
-  ![image-20220512220701624](https://gitee.com/youngstory/images/raw/master/img/image-20220512220701624.png)
+  ![image-20220512220701624](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/image-20220512220701624.png)
 
   - TEXT  超长文本  BLOB  二进制
   - int和integer的基本使用对比 
@@ -374,7 +390,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
 - create database student  character set utf8 ；
 
-- create table  表格名![img](https://gitee.com/youngstory/images/raw/master/img/dee97cc2-3e95-479f-abbd-6f4d38abac12-2519832.jpg)
+- create table  表格名![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/dee97cc2-3e95-479f-abbd-6f4d38abac12-2519832.jpg)
 
 - 创建表过程
 
@@ -400,7 +416,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
 - 插入记录 
 
-  ;![img](https://gitee.com/youngstory/images/raw/master/img/a006a08a-cd7f-459c-af9b-7b7ccefe871d-2519832.jpg)
+  ;![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/a006a08a-cd7f-459c-af9b-7b7ccefe871d-2519832.jpg)
 
   复制表的操作    CREATE table stu2 LIKE student ;    INSERT into stu2 SELECT * FROM student 
 
@@ -409,7 +425,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
   - update 表名  set  列名=‘值’  WHERE 列名='值 '
 
   - 多表更新
-    - update 表，表2    set  表达式 where条件  ![img](https://gitee.com/youngstory/images/raw/master/img/ec0af9b9-785a-43bc-91ad-a59c7a5cbf63-2519832.jpg)
+    - update 表，表2    set  表达式 where条件  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/ec0af9b9-785a-43bc-91ad-a59c7a5cbf63-2519832.jpg)
 
 - 删除数据记录 
 
@@ -423,7 +439,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
 - 数据查询
 
-  - select 语句  ![image-20220512221202826](https://gitee.com/youngstory/images/raw/master/img/image-20220512221202826.png)
+  - select 语句  ![image-20220512221202826](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/image-20220512221202826.png)
 
     - 消除重复行   select distinct  列名 from 表名 
 
@@ -458,18 +474,18 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
       - 按照出现的位置分为三类 ：
 
         - from 子查询  
-          - 必须定义别名  &&  外层查询的字段引用都应该包含在子查询中![img](https://gitee.com/youngstory/images/raw/master/img/1e75534f-a043-40d1-af93-ed03c48cc98a-2519832.jpg)
+          - 必须定义别名  &&  外层查询的字段引用都应该包含在子查询中![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/1e75534f-a043-40d1-af93-ed03c48cc98a-2519832.jpg)
 
         - where 子查询 
 
           - 单个值
-            - 比较运算符的过程中运算符的两侧基本都要求是一个明确的值 。![img](https://gitee.com/youngstory/images/raw/master/img/ee0f6414-45ce-4d2d-a132-2f72350c66e0-2519832.jpg)
+            - 比较运算符的过程中运算符的两侧基本都要求是一个明确的值 。![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/ee0f6414-45ce-4d2d-a132-2f72350c66e0-2519832.jpg)
 
           - 集合包含 
-            - where集合包含运算in判断集合   &&  子查询只能是一列![img](https://gitee.com/youngstory/images/raw/master/img/763e10ec-c279-4cc6-a8b1-985dd83deb00-2519832.jpg)
+            - where集合包含运算in判断集合   &&  子查询只能是一列![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/763e10ec-c279-4cc6-a8b1-985dd83deb00-2519832.jpg)
 
           - 判断存在  exists 
-            - ![img](https://gitee.com/youngstory/images/raw/master/img/e5562691-0ec0-48a6-8df0-d1a0dec875ee-2519832.jpg)
+            - ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/e5562691-0ec0-48a6-8df0-d1a0dec875ee-2519832.jpg)
 
         - select 子查询 
 
@@ -485,7 +501,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
 - 修改视图数据     update  视图名   set      
   
-- 同时有以下情况视图不予处理  ![img](https://gitee.com/youngstory/images/raw/master/img/e5376896-0667-4a87-a99a-2be630487b77-2519832.jpg)
+- 同时有以下情况视图不予处理  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/e5376896-0667-4a87-a99a-2be630487b77-2519832.jpg)
   
 - 删除视图    DROP  VIEW   视图名 
 
@@ -505,7 +521,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - 创建对象
 
-  - 对象存储过程     ![img](https://gitee.com/youngstory/images/raw/master/img/eee95da8-371b-4e28-b526-921c11ee0375-2519832.jpg)
+  - 对象存储过程     ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/eee95da8-371b-4e28-b526-921c11ee0375-2519832.jpg)
 
   - begin  ...  end  包围了定义的程序代码  ，end后面有结束符  delimiter  ；
 
@@ -521,15 +537,15 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
       - 全局变量:  查询-- 过程  ；  当前用户可以访问的任何环境中使用
 
-    - 变量赋值  :  set 变量名=表达式 ![img](https://gitee.com/youngstory/images/raw/master/img/796b7875-13ec-493a-82e9-64051cfb1c9e-2519832.jpg)
+    - 变量赋值  :  set 变量名=表达式 ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/796b7875-13ec-493a-82e9-64051cfb1c9e-2519832.jpg)
 
     - 显示语句:   select     变量名  
 
-    - 调用方法 call  过程名（  参数 ）  实参和形参 类型  数量要一一对应![img](https://gitee.com/youngstory/images/raw/master/img/d7e92ba3-e0ea-4db8-9f14-57a316d8d0ef-2519832.jpg)
+    - 调用方法 call  过程名（  参数 ）  实参和形参 类型  数量要一一对应![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/d7e92ba3-e0ea-4db8-9f14-57a316d8d0ef-2519832.jpg)
 
 - if 语句 
   
-- if     结束需要 end if ; ![img](https://gitee.com/youngstory/images/raw/master/img/cdcc2849-6c23-4fba-875b-e57ef170ebf5-2519832.jpg)
+- if     结束需要 end if ; ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/cdcc2849-6c23-4fba-875b-e57ef170ebf5-2519832.jpg)
   
 - Case
 
@@ -541,7 +557,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - else  语句3
 
-  - end  case ;    结束  ![img](https://gitee.com/youngstory/images/raw/master/img/58539cdf-b1f1-456c-8637-6396d2bca112-2519832.jpg)
+  - end  case ;    结束  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/58539cdf-b1f1-456c-8637-6396d2bca112-2519832.jpg)
 
 - loop  循环 
 
@@ -553,17 +569,17 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - end  loop;
 
-  - 程序无法控制循环结束 ，所以人为结束  ---  设置个变量满足条件执行  leave  结束   ![img](https://gitee.com/youngstory/images/raw/master/img/e9e12188-09bc-40c5-a8cd-01efa3c2f837-2519832.jpg)
+  - 程序无法控制循环结束 ，所以人为结束  ---  设置个变量满足条件执行  leave  结束   ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/e9e12188-09bc-40c5-a8cd-01efa3c2f837-2519832.jpg)
 
 - while 循环 
   
--  while   条件 DO   语句     end while  ;  ![img](https://gitee.com/youngstory/images/raw/master/img/dde3c42a-11c5-4f0a-ba8a-d3af2741b4dc-2519832.jpg)
+-  while   条件 DO   语句     end while  ;  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/dde3c42a-11c5-4f0a-ba8a-d3af2741b4dc-2519832.jpg)
   
 - 案列
 
-  - 斐波那契![img](https://gitee.com/youngstory/images/raw/master/img/b7689650-2a6f-480b-940a-da20edc9be52-2519832.jpg)
+  - 斐波那契![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/b7689650-2a6f-480b-940a-da20edc9be52-2519832.jpg)
 
-  - 求最大公约数 ![img](https://gitee.com/youngstory/images/raw/master/img/7328af79-7226-40bf-81f4-b234e1f3f11d-2519832.jpg)
+  - 求最大公约数 ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/7328af79-7226-40bf-81f4-b234e1f3f11d-2519832.jpg)
 
 - 输入输出 
 
@@ -573,7 +589,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - inout  双向赋值        
 
-  -  形参和实参的数量要一一对应  ![img](https://gitee.com/youngstory/images/raw/master/img/48c6c392-fc41-49f9-aefd-5e5d74f0e1e3-2519832.jpg)
+  -  形参和实参的数量要一一对应  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/48c6c392-fc41-49f9-aefd-5e5d74f0e1e3-2519832.jpg)
 
 - 游标  Cursor
 
@@ -581,7 +597,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - 使用方法 定义 >打开>获取游标数据>关闭游标>释放游标  ; 
 
-    ![image-20220512221408324](https://gitee.com/youngstory/images/raw/master/img/image-20220512221408324.png)
+    ![image-20220512221408324](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/image-20220512221408324.png)
 
     - 游标声明要放在变量声明之后 
 
@@ -604,7 +620,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
       - 异常:  sqlstate_code / error_code / 异常名  
 
-      - 常见的error_code  ![img](https://gitee.com/youngstory/images/raw/master/img/ee85277d-7a23-45f8-a0bf-40e18c108138-2519832.jpg)
+      - 常见的error_code  ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/ee85277d-7a23-45f8-a0bf-40e18c108138-2519832.jpg)
 
 ## 3.6 函数
 
@@ -616,7 +632,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
   - floor()   round()   rand()       concat ()     year()  now()  
 
-- 自定义函数   一定要有return 语句 ![img](https://gitee.com/youngstory/images/raw/master/img/ce89bdf6-54df-40dd-8f5c-143bee7d9090-2519832.jpg)
+- 自定义函数   一定要有return 语句 ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/ce89bdf6-54df-40dd-8f5c-143bee7d9090-2519832.jpg)
 
 - 触发器  trigger
 
@@ -666,7 +682,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
     - 差异备份 > 备份上次完全备份后的变化   >  数据量小
 
-    - 增量备份 > 备份上次完全备份和增量备份后的变化  > 数据量最小 （最优化）![img](https://gitee.com/youngstory/images/raw/master/img/a831e359-46b0-4409-8365-66e876f452ae-2519832.jpg)
+    - 增量备份 > 备份上次完全备份和增量备份后的变化  > 数据量最小 （最优化）![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/a831e359-46b0-4409-8365-66e876f452ae-2519832.jpg)
 
   - 迁移：
 
@@ -692,7 +708,7 @@ net  start/stop mysql/mysql56(服务名)  启用和停止服务     或者直接
 
     - 恢复操作 : >  mysql 选项  数据库 < 脚本文件     （前提:  先创建一个空的数据库 ）
 
-    - 完整备份所需的参数 ![img](https://gitee.com/youngstory/images/raw/master/img/518a13b1-28c8-481e-b20f-f60199ff73d6-2519832.jpg)![img](https://gitee.com/youngstory/images/raw/master/img/fb673b6c-8081-4a57-8144-3e960af78452-2519832.jpg)
+    - 完整备份所需的参数 ![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/518a13b1-28c8-481e-b20f-f60199ff73d6-2519832.jpg)![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/fb673b6c-8081-4a57-8144-3e960af78452-2519832.jpg)
 
     - 只备份表结构  
 

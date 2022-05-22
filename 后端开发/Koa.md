@@ -1,75 +1,73 @@
-## Koa基本运行原理
+## Koa 基本运行原理
 
-> koa采用的是洋葱圈模型，先执行完next()前面的语句，匹配完路由后，再返回执行next后面的语句
+> koa 采用的是洋葱圈模型，先执行完 next()前面的语句，匹配完路由后，再返回执行 next 后面的语句
 
 ### 特点
 
-- 避免异步嵌套 
+- 避免异步嵌套
 
-- **Koa 异步处理Async...Await 和Promise使用**
+- **Koa 异步处理 Async...Await 和 Promise 使用**
 
-- 洋葱模型  中间件  合理拆分业务 
+- 洋葱模型 中间件 合理拆分业务
 
-  ![image-20220120214707352](https://gitee.com/youngstory/images/raw/master/img/202201202147449.png)
+  ![image-20220120214707352](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201202147449.png)
 
-- 通过app.use  添加一个中间件 ， 一个中间件就是一个函数 
+- 通过 app.use 添加一个中间件 ， 一个中间件就是一个函数
 
-- 内层中间件能否执行取决于外层中间件的 next 函数 是否调用 
+- 内层中间件能否执行取决于外层中间件的 next 函数 是否调用
 
-- **调用next  函数 返回的是 promise 对象**
+- **调用 next 函数 返回的是 promise 对象**
 
-### 处理http请求
+### 处理 http 请求
 
-- ctx 即 request 和 response 的集合 ， 用来处理接收和返回数据  
+- ctx 即 request 和 response 的集合 ， 用来处理接收和返回数据
 
-- ctx.query  获取get 请求得参数集合   gei静态传值 
+- ctx.query 获取 get 请求得参数集合 gei 静态传值
 
-- ctx.request.path可以获取用户请求的路径 
+- ctx.request.path 可以获取用户请求的路径
 
-- ctx.request.body 获取post 请求的参数集合 
+- ctx.request.body 获取 post 请求的参数集合
 
-- ctx.response.body  设置响应数据 
+- ctx.response.body 设置响应数据
 
 ### 代码示例
 
 ```js
-var Koa = require('koa');
-var router = require('koa-router')();
+var Koa = require("koa");
+var router = require("koa-router")();
 var app = new Koa();
 
-// 中间件 
+// 中间件
 
-app.use(async(ctx,next)=>{
-  console.log('1.这是第一个中间件');
+app.use(async (ctx, next) => {
+  console.log("1.这是第一个中间件");
   await next();
-  console.log('5.匹配路由完成以后又会返回来执行中间件');
-})
+  console.log("5.匹配路由完成以后又会返回来执行中间件");
+});
 
-app.use(async(ctx,next)=>{
-  console.log('2. 这是第二个中间件 ');
+app.use(async (ctx, next) => {
+  console.log("2. 这是第二个中间件 ");
   await next();
-  console.log('4. 匹配路由完成以后又会返回来执行中间件');
-})
-router.get('/',async(ctx)=>{
-  ctx.body='首页'
-})
+  console.log("4. 匹配路由完成以后又会返回来执行中间件");
+});
+router.get("/", async (ctx) => {
+  ctx.body = "首页";
+});
 
-router.get('/new', async(ctx,next)=>{
-  console.log('3. 匹配到了news这个路由');
-  ctx.body='这是一个新闻'
-})
-app.use(router.routes()) // 启动路由
+router.get("/new", async (ctx, next) => {
+  console.log("3. 匹配到了news这个路由");
+  ctx.body = "这是一个新闻";
+});
+app.use(router.routes()); // 启动路由
 app.use(router.allowedMethods());
-app.listen(3002)
-
-
+app.listen(3002);
 ```
 
-## **jwt的token验证**
+## **jwt 的 token 验证**
 
-> **JWT就是一个加密的字符串，作为验证信息在计算机之间传递，只有可以访问持有对应正确的加密密钥的计算机才能对其进行解密，从而验证携带这个令牌（`Token`）的请求是否合法。**
+> **JWT 就是一个加密的字符串，作为验证信息在计算机之间传递，只有可以访问持有对应正确的加密密钥的计算机才能对其进行解密，从而验证携带这个令牌（`Token`）的请求是否合法。**
 
-基于Token的身份验证方法：
+基于 Token 的身份验证方法：
 
 ```
 1.客户端使用用户名跟密码请求登录
@@ -97,43 +95,43 @@ Payload 里面是 Token 的具体内容，这些内容里面有一些是标准�
 ### signature
 
 JWT 的最后一部分是 Signature ，这部分内容有三个部分——
-  第一部分 ：Base64 编码的header。
-  第二部分：Base64 编码的payload。
-  第三部分：再用加密算法加密一下，加密的时候要放进去一个 `Secret` ，这个相当于是一个密码，这个密码秘密地存储在服务端，不得泄露。![image-20211025141715996](https://gitee.com/youngstory/images/raw/master/img/202110251417258.png)
+第一部分 ：Base64 编码的 header。
+第二部分：Base64 编码的 payload。
+第三部分：再用加密算法加密一下，加密的时候要放进去一个 `Secret` ，这个相当于是一个密码，这个密码秘密地存储在服务端，不得泄露。![image-20211025141715996](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110251417258.png)
 
 ## 配置项
 
-**post  传送模块**  
+**post 传送模块**
 
- bodyparse  可支持的文件类型解析  
+bodyparse 可支持的文件类型解析
 
-<img src="https://gitee.com/youngstory/images/raw/master/img/202110231653916.png" alt="image-20211014092015250"  />
+<img src="https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110231653916.png" alt="image-20211014092015250"  />
 
-**ejs 模板引擎**  
+**ejs 模板引擎**
 
-安装 koa-views 和  ejs  
+安装 koa-views 和 ejs
 
-![image-20211014092100837](https://gitee.com/youngstory/images/raw/master/img/202110231653575.png)
+![image-20211014092100837](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110231653575.png)
 
-**传输日志 logger**  
+**传输日志 logger**
 
-![image-20211014092241463](https://gitee.com/youngstory/images/raw/master/img/202110231653010.png)
+![image-20211014092241463](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110231653010.png)
 
-前后端分离  必须是json接口 
+前后端分离 必须是 json 接口
 
-get  ? **普通传值   用ctx.query**对象来接收
+get ? **普通传值 用 ctx.query**对象来接收
 
-![image-20211023165431501](https://gitee.com/youngstory/images/raw/master/img/202110231654587.png)
+![image-20211023165431501](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110231654587.png)
 
-get  : **动态传值    用 ctx.params** 来接收    前后端分离resetful 常用动态路由 ![image-20211014093354213](https://gitee.com/youngstory/images/raw/master/img/202110231654915.png)
+get : **动态传值 用 ctx.params** 来接收 前后端分离 resetful 常用动态路由 ![image-20211014093354213](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202110231654915.png)
 
-接收post传值  ctx.request.body
+接收 post 传值 ctx.request.body
 
 ## 关联表
 
-hasOne  A 有一个 B   /    hasMany  A 有很多 B   /   belongsTo A 属于 B
+hasOne A 有一个 B / hasMany A 有很多 B / belongsTo A 属于 B
 
-举例： 
+举例：
 
 ```js
 有三张表  user_group用户分组表 、 user用户表、profile用户信息表
@@ -145,41 +143,41 @@ hasOne  A 有一个 B   /    hasMany  A 有很多 B   /   belongsTo A 属于 B
 4.一条用户信息 属于 一个用户  profile belongsTo user
 ```
 
-## 使用koa-multer 上传文件 
+## 使用 koa-multer 上传文件
 
-前端部分  使用 FormData 将数据编译成键值对，以便用`XMLHttpRequest`来发送数据
+前端部分 使用 FormData 将数据编译成键值对，以便用`XMLHttpRequest`来发送数据
 
 ```html
 <body>
-    <input type="file" id="file" accept="image/*"/>
-    <button id="submit">提交</button>
+  <input type="file" id="file" accept="image/*" />
+  <button id="submit">提交</button>
 </body>
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    $(function(){
-        $('#submit').click(()=>{
-            let file = $('#file')[0].files[0]
-            let formData = new FormData()
-            formData.set('file',file)
-            formData.set('name',file.name)
-            formData.set('timestamp',Date.now())
-            $.ajax({
-                url:'http://localhost:3000/user/file',
-                type:'post',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData:false,
-                success(res){
-                    console.log(res)
-                }
-            })
-        })
-    })
+  $(function () {
+    $("#submit").click(() => {
+      let file = $("#file")[0].files[0];
+      let formData = new FormData();
+      formData.set("file", file);
+      formData.set("name", file.name);
+      formData.set("timestamp", Date.now());
+      $.ajax({
+        url: "http://localhost:3000/user/file",
+        type: "post",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success(res) {
+          console.log(res);
+        },
+      });
+    });
+  });
 </script>
 ```
 
-node代码
+node 代码
 
 ```javascript
 const Koa = require('koa')
@@ -204,7 +202,7 @@ const limits = {
 }
 const upload = multer({storage,limits})
 
-route.post('/user/file', upload.single('file'), async (ctx,next)=>{  // 上传多个文件用 fields 
+route.post('/user/file', upload.single('file'), async (ctx,next)=>{  // 上传多个文件用 fields
     ctx.body = {
         code: 1,
         data: ctx.file  //在路由中，可通过 ctx.file 获取上传完毕的文件信息，多文件上传可通过 ctx.files 获取
@@ -217,7 +215,3 @@ app.listen(3000)
 ```
 
 使用
-
-
-
- 

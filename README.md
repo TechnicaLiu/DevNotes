@@ -14,16 +14,30 @@
 ### Github上优秀的仓库😊
 
 1. vue-element-admin   [PanJiaChen/vue-element-admin: A magical vue admin https://panjiachen.github.io/vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
 2. D2Admin [d2-projects/d2-admin: An elegant dashboard (github.com)](https://github.com/d2-projects/d2-admin)
-
 3. Vue-admin-better  [chuzhixin/vue-admin-better: 🚀🚀🚀vue admin,vue3 admin,vue3.0 admin,vue后台管理,vue-admin,vue3.0-admin,admin,vue-admin,vue-element-admin,ant-design,vue-admin-beautiful-pro,vab admin pro,vab admin plus,vue admin plus,vue admin pro (github.com)](https://github.com/chuzhixin/vue-admin-better)
 4. AdminLTE （Bootstrap 框架  jQuery插件） [ColorlibHQ/AdminLTE: AdminLTE - Free admin dashboard template based on Bootstrap 4 (github.com)](https://github.com/ColorlibHQ/AdminLTE)
-
 5.  Ant Desiong Pro   （React/umi/dva/antd） https://github.com/ant-design/ant-design-pro
-6.  Tabler （bootstrap ） https://github.com/tabler/tabler
-
+6. Tabler （bootstrap ） https://github.com/tabler/tabler
 7.  ngx-admin (基于 Angular 9+, Bootstrap 4 的后台管理面板框架。)  https://github.com/akveo/ngx-admin
+8. **JavaScript数据结构和算法完全解析[**[javascript-algorithms](https://link.zhihu.com/?target=https%3A//github.com/trekhleb/javascript-algorithms)**]**
+9. **30秒代码[**[30-seconds-of-code](https://link.zhihu.com/?target=https%3A//github.com/30-seconds/30-seconds-of-code)**]**
+10. **JavaScript 样式指南[**[airbnb-js-style-guide](https://link.zhihu.com/?target=https%3A//github.com/airbnb/javascript)**]**
+11. **你不知道的JavaScript[**[You-Dont-Know-JS](https://link.zhihu.com/?target=https%3A//github.com/getify/You-Dont-Know-JS)**]**
+12. **什么是\**的JavaScript[**[wtfjs](https://link.zhihu.com/?target=https%3A//github.com/denysdovhan/wtfjs)**]**
+13. **正确的学习JavaScript[**[js-the-right-way](https://link.zhihu.com/?target=https%3A//github.com/braziljs/js-the-right-way)**]**
+14. **JavaScript 进阶问题列表[**[javascript-questions](https://link.zhihu.com/?target=https%3A//github.com/lydiahallie/javascript-questions)**]**
+15. **干净的代码javascript[**[clean-code-javascript](https://link.zhihu.com/?target=https%3A//github.com/ryanmcdermott/clean-code-javascript)**]*
+16. **33 个 JavaScript 概念[**[33-js-concepts](https://link.zhihu.com/?target=https%3A//github.com/leonardomso/33-js-concepts)**]**
+17. **编写 ES6 的 kickstarter 指南[**[ES6-for-humans](https://link.zhihu.com/?target=https%3A//github.com/metagrover/ES6-for-humans)**]**
+18. **很棒的JavaScript[**[awesome-javascript](https://link.zhihu.com/?target=https%3A//github.com/sorrycc/awesome-javascript)**]**
+19. **. 现代 JavaScript 备忘单[**[modern-js-cheatsheet](https://link.zhihu.com/?target=https%3A//github.com/mbeaudru/modern-js-cheatsheet)**]**
+20. **JavaScript提示[**[jstips](https://link.zhihu.com/?target=https%3A//github.com/loverajoel/jstips)**]**
+21. **从零开始的 JavaScript 堆栈[**[js-stack-from-scratch](https://link.zhihu.com/?target=https%3A//github.com/verekia/js-stack-from-scratch)**]**
+22. **[**[Awesome JavaScript Projects](https://link.zhihu.com/?target=https%3A//github.com/Vishal-raj-1/Awesome-JavaScript-Projects)**]**  有意思的JavaScript项目
+23. **30天挑战[**[JavaScript30](https://link.zhihu.com/?target=https%3A//github.com/wesbos/JavaScript30)**]**
+24. **项目指南[**[project-guidelines](https://link.zhihu.com/?target=https%3A//github.com/elsewhencode/project-guidelines)**]**
+25. **JavaScript面试题[**[javascript-interview-questions](https://link.zhihu.com/?target=https%3A//github.com/sudheerj/javascript-interview-questions)
 
 ### 工具
 

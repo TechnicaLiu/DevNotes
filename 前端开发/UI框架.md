@@ -120,6 +120,51 @@
 }
 ```
 
+### 分页
+
+```scss
+.el-pagination {
+        .el-pagination__jump,
+        .el-pagination__total {
+          color: $font-color;
+          font-size: $font-size;
+          line-height: $el-pagination-li-height-length;
+        }
+        .btn-next,
+        .btn-prev,
+        .el-pager li {
+          font-size: $font-size;
+          line-height: $el-pagination-li-height-length;
+          text-align: center;
+          width: $el-pagination-li-width-length;
+          height: $el-pagination-li-height-length;
+          color: $font-minor-color;
+          background-color: transparent;
+          border: 1px solid $border-color-1;
+        }
+        &.is-background {
+            .el-pager {
+                li:not(.disabled) {
+                    &.active{
+                     background-color: $color-primary;
+                     border: none;
+                    }
+                }
+            }
+        }
+        .el-input.el-pagination__editor {
+            margin: 0px 4px;
+          .el-input__inner {
+            height: $el-pagination-li-height-length;
+            width: $el-pagination-input-width-length;
+    
+          }
+        }
+      }
+```
+
+
+
 ## 渲染
 
 1. elementUI中 <el-radio-group> 动态展示 
@@ -212,7 +257,9 @@
    }
    ```
 
-## 验证时间
+## 验证规则
+
+### 时间
 
 ```js
  checkStartTime(rule, value, callback) {
@@ -246,3 +293,89 @@ console.log(YMDHMS_daxiao('2021-9-1 8:00:00', '2021-12-3 15:00:00')); // -806040
 
 ```
 
+### 密码/账户验证
+
+```scss
+// 用户名不能空、空格
+export function checkAccount (rule, value, callback) {
+  let reg = /\s+/
+  if (!value || value.length === 0) {
+    callback(new Error('账号不能为空'))
+  } else if (reg.test(value)) {
+    callback(new Error('账号不能有空格'))
+  } else {
+    callback()
+  }
+}
+
+export function checkPassword (rule, value, callback) {
+  let reg = /\s+/
+  if (!value || value.length === 0) {
+    callback(new Error('密码不能为空'))
+  } else if (reg.test(value)) {
+    callback(new Error('密码不能有空格'))
+  } else {
+    callback()
+  }
+}
+
+export function checkPassword2 (rule, value, callback) {
+  console.log(value, this)
+  if (value !== this) {
+    callback(new Error('两次输入密码不一致'))
+  } else {
+    callback()
+  }
+}
+
+export function checkPhone (rule, value, callback) {
+  // let reg = /^1(3[0-9]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/
+  let reg = /^1(3|4|5|6|7|8|9)\d{9}$/
+
+  if (!reg.test(value)) {
+    callback(new Error('手机号输入错误'))
+  } else {
+    callback()
+  }
+}
+
+export function checkIpAddress (rule, value, callback) {
+  console.log(value, this)
+  var reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/
+  if (!reg.test(value)) {
+    callback(new Error('IP地址不合法'))
+  } else {
+    callback()
+  }
+}
+
+// 检查不能空、空格
+export function checkNull (text) {
+  let txt = text
+  return function (rule, value, callback) {
+    let reg = /\s+/
+    if (!value || value.length === 0) {
+      callback(new Error(txt + '不能为空'))
+    } else if (reg.test(value)) {
+      callback(new Error(txt + '不能有空格'))
+    } else {
+      callback()
+    }
+  }
+}
+```
+
+
+
+## 注意点
+
+1. 在element中 form表单 rules 验证规则中，一定要记得 callback , 不然 ` this.$refs.form.validate`不会证通过
+
+2. el-form表单验证 规则未生效问题：
+
+   出错点： 
+
+   1. el-form  未绑定 双向绑定数据  `:model='form'` 
+   2. el-form-item 的 prop 值和 输入框 的 v=model 不一致
+
+   

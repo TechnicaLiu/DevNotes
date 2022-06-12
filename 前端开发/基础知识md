@@ -1241,7 +1241,18 @@ Array.from(pList).forEach(item => {
 
 // 将字符串转为数组
 Array.from('hello') // ['h','e','l','l','o']
+
+
 ```
+
+同时还支持 类似Map函数的作用
+
+```js
+// 对数组的每项执行传入的 function
+console.log(Array.from([1, 2, 3], x => x + x));
+```
+
+
 
 ### Array.of()
 

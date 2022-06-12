@@ -2,20 +2,16 @@
 
 ## 1.安装
 
-````js
-```
 npm init -y  //创建一个空项目
 npm install --save-dev webpack
 npm install --save-dev webpack-cli
-```;
-````
 
 ## 2.目录结构
 
 - 按照我们之前了解 vue 项目的创建目录
 
   ```js
-  project - src - index.js - package.json;
+  project - src - main.js - package.json;
   ```
 
 - index.js 文件内容
@@ -35,7 +31,7 @@ console.log(add())
 
   ```js
   project - src - package.json - webpack.config.js;
-  ```
+```
 
 - webpack 的基础配置
 
@@ -51,7 +47,7 @@ console.log(add())
 
     ```js
     module.exports = {
-      entry: "./src/index.js",
+      entry: "./src/main.js",
     };
     ```
 
@@ -62,7 +58,7 @@ console.log(add())
     ```js
     module.exports = {
       output: {
-        filename: "js/mod.js",
+        filename: "js/app.js",
         //resolve是nodejs标准库的path库的方法，用来处理路径的。__dirname指的是当前的路径，
         path: resolve(__dirname, "build"),
         //publicPath会自动在输出的静态资源的路径前加上我们写的值，
@@ -453,7 +449,7 @@ index.js```
 
 在前端的工作中主要是用来解决以下三个方面出现的 debug 问题：
 
-​ a. 代码压缩混淆后
+ a. 代码压缩混淆后
 ​ b. 利用 sass 、typeScript 等其他语言编译成 css 或 JS 后
 ​ c. 利用 webpack 等打包工具进行多文件合并后
 
@@ -470,3 +466,149 @@ google 浏览器 打开 设置 - source 进行勾选
 ### .map 文件生成
 
 ![image-20220106112539152](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/202201061125242.png)
+
+
+
+配置代码
+
+```js
+const path = require('path')
+
+const name = process.env['VUE_APP_TITLE ']
+
+// 配置路径  
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
+
+module.exports = {
+  // 保证静态资源路径正确
+  publicPath: '/',
+  // 在开发模式下 启用 eslint验证
+  lintOnSave: process.env.NODE_ENV === 'development',
+  // 生成源代码和打包后的代码 对应映射位置的 信息文件
+  productionSourceMap: false,
+  // 自动化编译 
+  devServer: {
+    disableHostCheck: true,
+    open: true,
+    port: 8888,
+    // 开发环境默认开启反向代理，如果不需要请自行注释
+    proxy: {
+      '/tduck-api': {
+        target: 'http://192.162.130.172:8001/',
+        // target: 'http://220.178.67.242:8082',
+        // target: 'http://122.9.33.45:9101',
+        // target: 'http://localhost:8899',
+        changeOrigin: true
+      }
+    }
+  },
+  // 对 webpack做简单配置  
+  configureWebpack: {
+    // provide the app's title in webpack's name field, so that
+    // it can be accessed in index.html to inject the correct title.
+    name: name,
+    resolve: {
+      alias: {
+        '@': resolve('src')
+      }
+    }
+  },
+  // 对 webpack 做高级配置 ，包括对 loader的添加修改 以及 插件的使用
+  chainWebpack(config) {
+    // it can improve the speed of the first screen, it is recommended to turn on preload
+    // prefetch:用来告诉浏览器在页面加载完成后，利用空闲时间提前获取用户未来可能会访问的内容
+    // preload: 用来指定页面加载后很快会被用到的资源
+    config.plugin('preload').tap(() => [
+      {
+        rel: 'preload',
+        // to ignore runtime.js
+        // https://github.com/vuejs/vue-cli/blob/dev/packages/@vue/cli-service/lib/config/app.js#L171
+        fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
+        include: 'initial'
+      }
+    ])
+
+    // when there are many pages, it will cause too many meaningless requests
+    // prefetch 会加载未来资源 消耗带宽 所以要关掉
+    config.plugins.delete('prefetch')
+
+    // set svg-sprite-loader  目的是为了将svg图片转换为svg标签插入html 
+    config.module
+      .rule('svg')
+      .exclude.add(resolve('src/assets/icons'))
+      .end()
+    
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(resolve('src/assets/icons'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+    config.plugin('html')
+      .tap(args => {
+        args[0].title = process.env.VUE_APP_TITLE
+        args[0].debugTool = process.env.VUE_APP_DEBUG_TOOL
+        return args
+      })
+      .end()
+
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config
+            .plugin('ScriptExtHtmlWebpackPlugin')
+            .after('html')
+            .use('script-ext-html-webpack-plugin', [{
+              // `runtime` must same as runtimeChunk name. default is `runtime`
+              inline: /runtime\..*\.js$/
+            }])
+            .end()
+      // splitChunks提取或者分离代码的插件，主要作用提取公共代码，防止代码被重复打包 ，拆分过大的js文件，合并零散的js文件 
+          config
+            .optimization.splitChunks({
+            //chunks 决定要提取那些模块。
+            // initital: 提取同步和异步加载模块，如果一个模块既同步也异步，则打包两次
+            // async: 只提取异步加载的模块出来打包到一个文件中
+              chunks: 'all',  // 不管异步加载还是同步加载的模块都提取出来，打包到一个文件中。
+            
+              // 配置提取模块的方案 。 里面每一项代表一个提取模块的方案
+           	 cacheGroups: { 
+                libs: {
+                  // 打包生成js文件的名称 
+                  name: 'chunk-libs',
+                  // 用来匹配要提取的模块的资源路径或名称 
+                  test: /[\\/]node_modules[\\/]/,
+                  // 方案的优先级
+                  priority: 10, 
+                  chunks: 'initial' // only package third parties that are initially dependent
+                },
+                elementUI: {
+                  name: 'chunk-elementUI', // split elementUI into a single package
+                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                },
+                commons: {
+                  name: 'chunk-commons',
+                  test: resolve('src/components'), // can customize your rules
+                  minChunks: 3, //  minimum common number
+                  priority: 5,
+                  reuseExistingChunk: true
+                }
+              }
+            })
+          // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
+          config.optimization.runtimeChunk('single')
+        }
+      )
+  }
+}
+
+```
+

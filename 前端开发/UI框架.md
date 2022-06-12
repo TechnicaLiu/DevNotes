@@ -365,7 +365,37 @@ export function checkNull (text) {
 }
 ```
 
+## el-scrollbar
 
+```js
+<div style='height:768px'>
+  <el-scrollbar style="height:100%">
+    <ul>
+    	<li style=“height:300px”></li>
+			<li style=“height:300px”></li>
+			<li style=“height:300px”></li>
+	</ul>
+</el-scrollbar>
+</div>
+
+			
+```
+
+注意：
+
+1. 必须设置外层容器高度
+
+2. 要设置el-scrollbar 的高度为 100% 将需要滚动的html代码包裹起来
+
+3. 去掉水平滚动条使用 
+
+   ```scss
+   .el-scrollbar__wrap{
+     overflow-x:hidden;
+   }
+   ```
+
+   
 
 ## 注意点
 

@@ -71,7 +71,7 @@
 
    > 其核心是 Object.defineProperty()方法
 
-   vue.js 则是**采用数据劫持结合发布者-订阅者模式**的方式，通过 Object.defineProperty()来劫持各个属性的 setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
+   vue.js 则是**采用数据劫持结合发布者-订阅者模式**的方式，通过 Object.defineProperty()来**劫持各个属性的 setter，getter**，在数据变动时发布消息给订阅者，触发相应的监听回调。
 
    但是 Vue2 所使用的 Object.defineProperty()方法 只能监听已存在的属性，**对于新增删除属性却不可以 而且无法监听数组的变化**。 所以 Vue3.0 proxy 代理 出现了！！
 

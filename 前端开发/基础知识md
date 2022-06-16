@@ -181,18 +181,92 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 
 ## Canvas
 
-定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。
+> 定义图形，比如图表和其他图像，您必须使用脚本来绘制图形。
 
-- 矩形![img](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/7e4eaf7c-aaa5-4907-80e5-ef15002862aa-2519832.jpg)
+### 基本用法
 
-- 圆形 
+```html
+<body onload="draw()">
+    <canvas id="canvas" width="300" height="300" ></canvas>
+</body>
+<script>
+    function draw(){
+        var myCan = document.getElementById('canvas')
+        var ctxt = myCan.getContext("2d");
+        
+        ctxt.fillStyle = 'yellowgreen';
+        ctxt.fillRect(20,20,100,100);
+        ctxt.fillStyle = 'rgba(0, 0, 200, 0.5)';
+        ctxt.fillRect(70,70,100,100);
+    }
+</script>
+```
 
-  - ctx.beginPath( ) ;  ctx.arc(95,50,40,0,2*Math.PI);
+### 绘制形状
 
-  - arc( 圆的中心的x坐标，园的中心的坐标，圆的半径，起始角，结束角，true/false 顺时针逆时针)
+[使用 canvas 来绘制图形 - Web API 接口参考 | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes)
 
-- 直线
-  - move to (  )  起始点   line to ( 终点 )
+形状的基本元素是路径。路径是通过不同颜色和宽度的线段或曲线相连形成的不同形状的点的集合。所以我们绘制路径要经过这几步：
+
+1. 首先，创建路径起始点
+
+   ```js
+   // 开始绘制函数
+   beginPath() 
+   ```
+
+2. 使用画图命令去画出路径
+
+   ```js
+   // 通过线条来绘制
+   stroke()  
+   ```
+
+3. 之后你把路径封闭
+
+   ```js
+   // 闭合路径
+   closePath()
+   ```
+
+4. 一旦路径生成，就可以描边或填充来渲染图形
+
+   ```js
+   // 填充内容区域
+   fill()
+   
+   ```
+
+移动笔触：
+
+```js
+// 我们可以使用它来设置不同的起点 已达到不连续的路径
+moveTo(x,y)  // 将笔触移动到指定的坐标 x,y
+```
+
+线
+
+```js
+// 绘制直线  从当前位置到指定坐标的线 
+lineTo(x,y)
+```
+
+圆弧
+
+```js
+// 绘制圆弧或者圆
+arc(x, y, radius, startAngle, endAngle, anticlockwise)
+/*
+	x,y 绘制圆弧所在圆上的圆心坐标
+	radius 半径
+	startAngle以及endAngle参数用弧度定义了开始以及结束的弧度
+	anticlockwise true为 逆时针 false 为顺时针 
+*/
+
+弧度与角度 换算: 弧度=(Math.PI/180)*角度
+```
+
+
 
 ## 拖动元素
 
@@ -232,6 +306,67 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 1. 将要拖动的元素 设置 可拖动属性 `draggable="true"`
 2. 将要拖动的元素绑定开始拖动函数   `ondragstart="drag(event)"`
 3. 在 放置的目标位置 绑定  `ondragover`  和 `ondrop`
+
+## 模板引擎 pug
+
+[属性 Attribute – Pug 模板引擎中文文档 | Pug 中文网 (pugjs.cn)](https://www.pugjs.cn/language/attributes.html)
+
+背景：项目中有用到 pug模板引擎 和 sylus CSS ( 相关笔记在 CSS 标题下 )预处理器语法，之前也没有接触过，简单过一下。
+
+为什么要用这个模板引擎呢 ？ 可能出于这几个原因：
+
+1. 代码中 标签 不需要 再用 尖括号 包起来，而选中 缩进对齐 来代替 成对标签
+2. 标签中的属性 用( ) 包起来。 标签中的文字跟在后面就可以 
+3. 加快开发效率 
+
+### 安装使用
+
+```js
+// vue中安装 
+npm i -D pug pug-html-loader pug-plain-loader
+
+// 修改webpack打包规则，能够转义成css
+cli2.0 build / webpack.base.config.js
+
+module: {
+  rules: [
+   {
+    test:/\.pug$/,
+    loader: "pug-html-loader"
+   },
+   // 省略其他规则
+  ]
+ }
+
+cli3.0 - vue.config.js
+module.exports = {
+  chainWebpack: config => {
+      config.module.rule('pug')
+          .test(/\.pug$/)
+          .use('pug-html-loader')
+          .loader('pug-html-loader')
+          .end()
+  }
+}
+
+
+```
+
+### try
+
+```vue
+<template lang='pug'>
+    div(style='color:#000' )
+        p 练习pug
+        ul(v-if='catalogs && catalogs.length > 0' @click='clickLi')
+            li(v-for='(item,index) in catalogs' :key='index')
+                span(:style='item.id == 1 ? "color:blue; fontSize:22px" : "" ') {{item.name}}
+        input.inputName(v-model='inputValue' type='text' placeholder='请输入')
+        button( @click='btnHandle' ) 搜索
+</template>
+```
+
+
 
 # CSS
 
@@ -515,6 +650,42 @@ Less也是一种动态样式语言. 对CSS赋予了动态语言的特性，如�
 1. 变量符不一样  **less 是 @  , 而scss是 $** 
 2. 不支持 if  elseif  语句 
 3. 引入与普通的css 的引入无差异
+
+## Stylus
+
+[Stylus: 富有表现力、动态、强大的CSS | Stylus中文网 (zcopy.site)](https://stylus.zcopy.site/)
+
+为什么使用它？
+
+stylus和scss相似，都有着可编程的特性，例如引入了变量 嵌套 继承 迭代等概念，但是 stylus 更加的简洁，主要几个点：
+
+1. 省掉了花括号，用缩进来代替 （和pug亲兄弟啊）
+2. 分号、逗号也可以省略掉
+
+### 使用
+
+```js
+//一定要注意 版本的兼容性， 现在比较稳妥的版本是: 
+//"stylus": "^0.54.8",
+// "stylus-loader": "^3.0.2",
+npm uninstall stylus stylus-loader -S
+```
+
+### try
+
+```stylus
+body
+  color white
+textarea, input
+  border 1px solid #eee  
+// 可以使用新行  h
+textarea
+input
+  border 1px solid #eee
+ 
+```
+
+
 
 ## vertical-align
 

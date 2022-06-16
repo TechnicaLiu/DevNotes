@@ -39,7 +39,7 @@ console.log(add())
 
     ```js
     module.exports = {};
-    ```
+```
 
   - entry
 
@@ -147,7 +147,7 @@ console.log(add())
             }),
         ],
     }
-
+    
     ```
 
 ## 4.css 样式的 loader 配置
@@ -469,7 +469,7 @@ google 浏览器 打开 设置 - source 进行勾选
 
 
 
-配置代码
+## vue.config.js
 
 ```js
 const path = require('path')
@@ -608,6 +608,47 @@ module.exports = {
         }
       )
   }
+}
+
+```
+
+## package.json
+
+```json
+{
+  "name": "project2", // 项目名
+  "version": "1.0.0",  // 项目包的版本号 
+  "description": "A Vue.js project",
+  "author": "Chaox <1198370860@qq.com>",
+  "private": true,
+  // package.json内置脚本入口   
+  "scripts": {
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "npm run dev",
+    "build": "node build/build.js"
+  },
+   // 项目的生产环境中所必需的依赖包
+   // 当使用 npm intall ** --save 的时候会将新包写到这个里面
+  "dependencies": {
+    "axios": "^0.18.0",
+  },
+   // 项目开发环境中需要的依赖包。如webpack。esline等只是辅助性开发工具，无需在生产环境中运行代码 
+   // 当使用 npm install --save -dev <PACKAGENAME> 时引入
+  "devDependencies": {
+    "autoprefixer": "^7.2.6",
+    "babel-core": "^6.26.3",
+  },
+    // 对项目所使用的 npm 和 Node 版本进行说明 
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+   // 告知 支持哪些浏览器及版本 
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
 
 ```

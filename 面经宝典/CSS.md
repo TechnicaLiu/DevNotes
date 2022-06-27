@@ -126,10 +126,74 @@ flex 是弹性布局（轴线布局），只能指定”项目“针对轴线的
 
 ## 清除浮动的几种方式
 
-- 父级 div 定义 height
-- 结尾处加空 div 标签 clear : both
-- 父级 div 定义伪类 :after 和 zoom:1
-- 父级 div 定义 overflow:hidden
+- 在浮动元素后边加一个div ，并设置 **clear:both** 样式
+
+  ```js
+  <div class="left" style='float:left'>左侧盒子</div>
+  <div style='clear:both'></div>   // 在浮动元素后加  空标签 
+  <div class="right">右侧盒子</div>
+  
+  
+  ```
+
+* 给浮动元素的父级 设置高度
+
+  ```js
+   <div class="father">
+        <div class="left">左侧盒子</div>
+    </div>
+   <div class="center">中间盒子</div>
+  
+  .father {
+        height: 100px;
+      }
+      .left {
+        width: 100px;
+        height: 100px;
+        border: 1px solid rgb(196, 41, 41);
+        float: left;
+    }
+    
+  ```
+
+* 给父元素添加 after 设置clear:both
+
+  ```js
+  <div class="father">
+        <div class="left">左侧盒子</div>
+      </div>
+  <div class="center">中间盒子</div>
+  <div class="right">右侧盒子</div>
+  
+  .left {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgb(196, 41, 41);
+    float: left;
+  }
+  .father:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  ```
+
+* 父元素 overflow:auto / ov erflow:hidden
+
+  ```js
+  <div class="father">
+        <div class="left">左侧盒子</div>
+      </div>
+  <div class="center">中间盒子</div>
+  <div class="right">右侧盒子</div>
+  
+  .father{
+    overflow:auto / hidden 
+  }
+  .left{
+    float:left
+  }
+  ```
 
 ## display: inline-block 与 inline block 的区别
 
@@ -186,28 +250,27 @@ flex 是弹性布局（轴线布局），只能指定”项目“针对轴线的
 
 ## 什么是 BFC? BFC 的布局规则是什么？如何创建 BFC？BFC 应用？
 
-> BFC(block formatting context ) 块级格式化上下文，他是一个独立的渲染区域，只有 block-level box 参与，它规定了内部的 BLOCK-LEVEL BOX 如何布局，并于这个区域外部毫不相干
+> BFC(block formatting context ) 块级格式化上下文，他是一个独立的渲染区域，只有块级盒子参与，它规定了内部的 盒子如何布局，并于这个区域外部毫不相干
 
-**Box ：** css 布局的基本单位，直观点说就是一个页面是由很多个 Box 组成的，元素的类型和 display 属性 ，决定了这个 box 的类型 。 不同类型的 Box，会参与不同的 Formatting Context .
+**Box ：** css 布局的基本单位，直观点说就是一个页面是由很多个 Box 组成的，元素的类型和 display 属性 ，决定了这个 box 的类型 。 **不同类型的 Box，会参与不同的 Formatting Context .**
 
-block-level box ： display 属性为 block .list-item,table 的元素，会生成 block-level box , 并且参与 blockd fomatting context ;
+块级盒子 ： display 属性为 block .list-item,table 的元素，会生成 block-level box , 并且参与 blockd fomatting context ;
 
-inline-level box : display 属性为 inline , inline-block , inline-table 的元素，会生成 inline-level box. 并且参与 inline formatting context
+内联盒子 : display 属性为 inline , inline-block , inline-table 的元素，会生成 inline-level box. 并且参与 inline formatting context
 
-**Formatting Context :** 它是页面中的一块 渲染区域，并且有一套渲染规则 ，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。最常见的 Formatting context 有 block formatting context 和 inline formatting context
+**Formatting Context :** 它是页面中的一块 渲染区域，并且有一套渲染规则 ，它**决定了其子元素将如何定位**，**以及和其他元素的关系和相互作用。**最常见的 Formatting context 有 块级盒子和内联盒子  
 
 **BFC 的布局规则 :**
 
-- 内部的 Box 会在垂直方向，一个接一个的放置。
+- 内部的 Box 会在**垂直方向**，一个接一个的放置。
 - box 垂直方向的距离由 margin 决定， 属于同一个 BFC 的两个 相邻 box 的 margin 会发生重叠。
 - 每个盒子（块盒与行盒）的 margin box 的左边，与包含块 border box 的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
-- BFC 的区域不会与 float box 重叠。
+- **BFC 的区域不会与 float box 重叠。**
 - BFC 就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。计算 BFC 的高度时，浮动元素也参与计算。
 
 **如何创建 BFC?**
 
-- float 的值不是 none。
-- position 的值不是 static 或者 relative。
+- 浮动元素、根元素、定位元素、行内块元素
 - display 的值是 inline-block、table-cell、flex、table-caption 或者 inline-flex
 - overflow 的值不是 visible
 

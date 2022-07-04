@@ -87,7 +87,7 @@ timedCount();
 
 SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图形质量不会有所损失。同时他也存在以下优势：
 
-1. SVG与JPEG和GIF图像比起来，尺寸更小，且可压缩性更强。
+1. SVG与JPEG和GIF图像比起来，**尺寸更小，且可压缩性更强。**
 2. SVG可在图像质量不下降的情况下被放大。
 3. SVG 文件是纯粹的 XML。
 
@@ -128,6 +128,8 @@ SVG 使用 XML格式来定义图像，在放大或改变尺寸的情况下其图
 * 关闭标签的作用是关闭 SVG 元素和文档本身。
 
 ### 应用场景
+
+一些svg库 [Science Icon Pack | Flat | 50 .SVG Icons (flaticon.com)](https://www.flaticon.com/packs/science-287)、iconfont
 
 **ICON图标**
 

@@ -178,9 +178,9 @@ const User = {
 
 11. $route 和 $ router 的区别是什么 ？
 
-    $router 是 vueRouter 的实例，是一个全局路由对象，包含了路由跳转，钩子函数等。
+    $router 是 vueRouter 的实例，是一个**全局路由对象**，包含了路由跳转，钩子函数等。
 
-    $route 对象表示当前的路由对象，包含了当前 URL 解析得到的信息。包括当前的路径，参数，query 对象等。如 $route.path $route.params $route.query
+    $route 对象**path不能和params一起使用**，包含了当前 URL 解析得到的信息。**包括当前的路径，参数**，query 对象等。如 $route.path $route.params $route.query
 
 12. vue-loader 的作用
 
@@ -348,7 +348,7 @@ const router =new VueRouter({
           component: resolve => require.ensure([], () => resolve(require('../components/Hello')), 'demo')
       }
       //这两个路由最终会打包成一个demo.js文件
-
+  
       ```
 
 20. 什么是 Vue 的计算属性 ？

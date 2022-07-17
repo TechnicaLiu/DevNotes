@@ -2633,6 +2633,21 @@ axios.get(`https://...../payorderNumber=${_self.orderNumber}&openId=${_self.$use
 
 ![postman图片示例](https://techliuimg.oss-cn-beijing.aliyuncs.com/img/16a81ce40c674e42~tplv-t2oaga2asx-watermark.awebp)
 
+## post提交数据得四种编码格式
+
+1. application/x-www-form-urlencoded
+
+   传表单格式  键值对
+
+2. multipart/form-data （常见） 
+
+   能传文件，也能传表单数据  。 用表单上传文件时必须使用 form表单得 **enctype**属性或者 ajax的 contentType 参数等于  **multipart/form-data**  
+
+3. application/json 
+4. text/xml
+
+   
+
 # 服务端部署
 
 ## 1. Vue前端项目打包

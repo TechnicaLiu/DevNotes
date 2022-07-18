@@ -245,16 +245,16 @@
    // 解决方法： 将空的childList 数组 设置为undefined 
    this.treeData = this.optimizeTreeDate(res.data);
    
-   optimizeTreeData(data){
-     for(let i=0,i<data.length;i++){
-       if(data[i].childList =length <1){
-         data[i].childList = undefined ;
-       }else{
-         this.optimizeTreeData(data[i].childList)
-       }
-       return data
-     }
-   }
+   optimizeTreeData(data) {
+         for (let i = 0; i < data.length; i++) {
+           if ((data[i].childList.length < 1)) {
+             data[i].childList = undefined
+           } else {
+             this.optimizeTreeData(data[i].childList)
+           }
+         }
+         return data
+       },
    ```
 
 ## 验证规则

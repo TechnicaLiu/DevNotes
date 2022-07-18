@@ -1,3 +1,7 @@
+1. echarts 报 Cannot read property 'getAttribute' of undefined" **错误**
+
+   待DOM渲染完毕后再把echarts挂载到html元素 。 在 mounted生命周期中进行初始化
+   
 1. echarts中 legend的**formatter** 格式化为 百分比  如: 单选题 5%
 
    ```js

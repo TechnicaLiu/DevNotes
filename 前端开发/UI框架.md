@@ -257,6 +257,19 @@
        },
    ```
 
+4. **el-input 限制输入长度**
+
+   ```js
+    <el-input v-model="addForm.count"
+         type="number"
+         class="long-input"
+         clearable placeholder="请输入"
+         oninput="if(value.length>3)value=value.slice(0,3)">
+    </el-input>
+   ```
+
+   
+
 ## 验证规则
 
 ### 时间
